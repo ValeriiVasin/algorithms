@@ -1,3 +1,6 @@
+/**
+ * http://en.wikipedia.org/wiki/Merge_sort
+ */
 function sort(arr) {
   var length = arr.length;
 
