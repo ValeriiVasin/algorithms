@@ -2,6 +2,7 @@
  * Selection sort
  * http://en.wikipedia.org/wiki/Selection_sort
  */
+var swap = require('./common').swap;
 
 function sort(arr) {
   var length = arr.length;
@@ -18,11 +19,7 @@ function sort(arr) {
       }
     }
 
-    // swap
-    if ( minIndex !== i ) {
-      arr[minIndex] = arr[i];
-      arr[i] = minValue;
-    }
+    swap(arr, minIndex, i);
   }
 
   return arr;

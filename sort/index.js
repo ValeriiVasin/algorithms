@@ -17,6 +17,6 @@ function run(label, sortFn) {
 
 run('Insertion sort', insertionSort);
 run('Selection sort', selectionSort);
-run('Selection sort', bubbleSort);
+run('Bubble sort', bubbleSort);
 run('Quick sort', quickSort);
 run('Merge sort', mergeSort);
