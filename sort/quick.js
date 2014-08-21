@@ -4,22 +4,18 @@
 
 var swap = require('./common').swap;
 
-function sort(arr, left, right) {
-  if ( typeof left === 'undefined' ) {
-    left = 0;
-  }
+function sort(arr) {
+  return quicksort(arr, 0, arr.length - 1);
+}
 
-  if ( typeof right === 'undefined' ) {
-    right = arr.length - 1;
-  }
-
+function quicksort(arr, left, right) {
   if ( left >= right ) {
     return;
   }
 
   var _partition = partition(arr, left, right);
-  sort(arr, 0, _partition - 1);
-  sort(arr, _partition + 1, right);
+  quicksort(arr, 0, _partition - 1);
+  quicksort(arr, _partition + 1, right);
 
   return arr;
 }
