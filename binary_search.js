@@ -1,3 +1,7 @@
+/**
+ * http://en.wikipedia.org/wiki/Binary_search_algorithm
+ */
+
 function binarySearchRecursive(arr, value) {
   return _binarySearchRecursive(arr, value, 0, arr.length - 1);
 }
