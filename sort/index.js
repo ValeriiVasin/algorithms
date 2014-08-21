@@ -1,7 +1,8 @@
-var arr = require('./data').arr;
+var arr = require('./common').arr;
 var insertionSort = require('./insertion');
 var selectionSort = require('./selection');
 var bubbleSort = require('./bubble');
+var quickSort = require('./quick');
 
 function run(label, sortFn) {
   var data = [].concat( arr );
@@ -16,3 +17,4 @@ function run(label, sortFn) {
 run('Insertion sort', insertionSort);
 run('Selection sort', selectionSort);
 run('Selection sort', bubbleSort);
+run('Quick sort', quickSort);
