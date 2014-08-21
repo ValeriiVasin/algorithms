@@ -1,8 +1,9 @@
-var swap = require('./common').swap;
-
 /**
  * http://en.wikipedia.org/wiki/Quicksort
  */
+
+var swap = require('./common').swap;
+
 function sort(arr, left, right) {
   if ( typeof left === 'undefined' ) {
     left = 0;
@@ -24,13 +25,13 @@ function sort(arr, left, right) {
 }
 
 function partition(arr, left, right) {
+  // choose random pivot
   var pivotIndex = random(left, right);
   var pivotValue = arr[pivotIndex];
   var i;
 
   // move pivot element to the right - we should not process it
-  arr[pivotIndex] = arr[right];
-  arr[right] = pivotValue;
+  swap(arr, pivotIndex, right);
 
   var storeIndex = left;
   for (i = left; i < right; i += 1) {
@@ -38,9 +39,7 @@ function partition(arr, left, right) {
 
       // if element is less then pivot - swap it with storeIndex element,
       // which is greater
-      if ( i !== storeIndex ) {
-        swap(arr, i, storeIndex);
-      }
+      swap(arr, i, storeIndex);
 
       storeIndex += 1;
     }

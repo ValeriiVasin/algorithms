@@ -1,4 +1,8 @@
 function swap(arr, i, j) {
+  if ( i === j ) {
+    return;
+  }
+
   var temp = arr[i];
   arr[i] = arr[j];
   arr[j] = temp;
