@@ -28,6 +28,19 @@ Stack.prototype.push = function (value) {
   return this;
 };
 
+Stack.prototype.forEach = function (callback) {
+  if ( this.isEmpty() ) {
+    return;
+  }
+
+  var item = this._root;
+
+  while ( item !== null ) {
+    callback(item.value);
+    item = item.next;
+  }
+};
+
 /**
  * Implement Queue using linked list
  */
@@ -70,3 +83,5 @@ Queue.prototype.dequeue = function () {
 Queue.prototype.isEmpty = function () {
   return this._root === null;
 };
+
+Queue.prototype.forEach = Stack.prototype.forEach;
