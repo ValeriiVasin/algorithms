@@ -5,6 +5,7 @@ var bubbleSort = require('./bubble');
 var quickSort = require('./quick');
 var mergeSort = require('./merge');
 var heapSort = require('./heap');
+var shellSort = require('./shell');
 
 function run(label, sortFn) {
   var data = [].concat( arr );
@@ -17,6 +18,7 @@ function run(label, sortFn) {
 }
 
 run('Insertion sort', insertionSort);
+run('Shell sort', shellSort);
 run('Selection sort', selectionSort);
 run('Bubble sort', bubbleSort);
 run('Quick sort', quickSort);
