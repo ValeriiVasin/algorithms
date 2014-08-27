@@ -47,6 +47,33 @@ function partition(arr, left, right) {
 }
 
 /**
+ * Quick select: http://en.wikipedia.org/wiki/Quickselect
+ *
+ * @param  {Array} arr  Source array
+ * @param  {Number} n   Number of index we want to get value for
+ * @return {Number}     Value in sorted array with provided index
+ */
+function select(arr, n) {
+  var left = 0;
+  var right = arr.length - 1;
+  var index;
+
+  while ( index !== n && left <= right ) {
+    index = partition(arr, left, right);
+
+    if ( index < n ) {
+      left = index + 1;
+    }
+
+    if ( index > n ) {
+      right = index - 1;
+    }
+  }
+
+  return arr[index];
+}
+
+/**
  * Random number between [start, end]
  * @param  {Number} start Start number
  * @param  {Number} end   End number
