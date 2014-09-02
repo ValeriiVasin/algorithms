@@ -15,7 +15,7 @@ function getPrimes(n) {
     }
 
     step = i === 2 ? 2 : 2 * i;
-    for (j = i * i; j <= n; j += step ) {
+    for (j = i * i; j <= n; j += step) {
       primes[j] = false;
     }
   }
