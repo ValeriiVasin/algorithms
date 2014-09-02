@@ -1,121 +1,141 @@
-function BinaryTree(value, opts) {
-  if ( typeof opts === 'undefined' ) {
-    opts = {};
-  }
-
-  this.value  = value;
-  this.left   = opts.left || null;
-  this.right  = opts.right || null;
-  this.parent = opts.parent || null;
+function BinaryTree() {
+  this._root = null;
 }
 
 BinaryTree.prototype.insert = function (value) {
+  this._root = this._insert(this._root, value);
+  return this;
+};
+
+BinaryTree.prototype._insert = function (node, value) {
+
+  // return newly created node
+  if ( node === null ) {
+    return {
+      value: value,
+      left: null,
+      right: null
+    };
+  }
+
+  if ( value > node.value ) {
+    node.right = this._insert(node.right, value);
+  } else if ( value < node.value ) {
+    node.left = this._insert(node.left, value);
+  }
+
   // binary tree could not contain elements with same values
 
-  if ( value > this.value ) {
-    if ( this.right === null ) {
-      this.right = new BinaryTree(value, { parent: this });
-    } else {
-      this.right.insert(value);
-    }
-    return;
-  }
-
-  if ( value < this.value ) {
-    if ( this.left === null ) {
-      this.left = new BinaryTree(value, { parent: this });
-    } else {
-      this.left.insert(value);
-    }
-  }
+  return node;
 };
 
 BinaryTree.prototype.remove = function (value) {
-  // remove current node
-  if ( this.value === value ) {
-    if ( this.left && this.right ) {
-      // has 2 children
-      console.log('You are trying to remove node with two children.');
-      return;
-    }
+  this._root = this._remove(this._root, value);
+  return this;
+};
 
-    var child = this.left ? this.left : this.right;
-
-    // has only left child
-    if ( child ) {
-      child.parent = this.parent;
-      if ( this.parent.left === this ) {
-        this.parent.left = child;
-      } else {
-        this.parent.right = child;
-      }
-      return;
-    }
-
-    // has no children
-    if ( this.parent.left === this ) {
-      this.parent.left = null;
-    } else {
-      this.parent.right = null;
-    }
-
-    return;
+BinaryTree.prototype._remove = function (node, value) {
+  if ( node === null ) {
+    return null;
   }
 
-  if ( value > this.value && this.right ) {
-    this.right.remove(value);
+  if ( node.value < value ) {
+    node.right = this._remove(node.right, value);
+  } else if ( node.value > value ) {
+    node.left = this._remove(node.left, value);
+  } else if ( node.value === value ) {
+    if ( node.left === null ) {
+      return node.right;
+    }
+
+    if ( node.right === null ) {
+      return node.left;
+    }
+
+    // node has 2 children
+    var _node = node;
+    node = this._min(_node.right);
+    node.right = this._removeMin(_node.right);
+    node.left = _node.left;
   }
 
-  if ( value < this.value && this.left ) {
-    this.left.remove(value);
+  return node;
+};
+
+BinaryTree.prototype._removeMin = function (node) {
+  if ( node === null ) {
+    return null;
   }
+
+  if ( node.left === null ) {
+    return node.right;
+  }
+
+  node.left = this._removeMin(node.left);
+
+  return node;
+};
+
+BinaryTree.prototype._min = function (node) {
+  if ( node === null ) {
+    return null;
+  }
+
+  if ( node.left === null ) {
+    return node;
+  }
+
+  return this._min(node.left);
+};
+
+BinaryTree.prototype._max = function (node) {
+  if ( node === null ) {
+    return null;
+  }
+
+  if ( node.right === null ) {
+    return node;
+  }
+
+  return this._max(node.right);
 };
 
 // in-order traverse: (left, root, right)
 BinaryTree.prototype.traverse = function (callback) {
-  if ( this.left ) {
-    this.left.traverse(callback);
+  this._traverse(this._root, callback);
+};
+
+BinaryTree.prototype._traverse = function (node, callback) {
+  if ( node === null ) {
+    return;
   }
 
-  callback( this.value );
-
-  if ( this.right ) {
-    this.right.traverse(callback);
-  }
+  this._traverse(node.left, callback);
+  callback(node.value);
+  this._traverse(node.right, callback);
 };
 
 BinaryTree.prototype.findMin = function () {
-  var root = this;
-  var min;
-
-  while ( root ) {
-    min = root.value;
-    root = root.left;
-  }
-
-  return min;
+  var node = this._min(this._root);
+  return node && node.value;
 };
 
 BinaryTree.prototype.findMax = function () {
-  var root = this;
-  var max;
-
-  while ( root ) {
-    max = root.value;
-    root = root.right;
-  }
-
-  return max;
+  var node = this._max(this._root);
+  return node && node.value;
 };
 
-var arr = [ 5, 1, 2, 3, 18, 5, 9, -5, -9 ];
+BinaryTree.prototype.toString = function () {
+  return JSON.stringify( this._root );
+};
 
-var BT = new BinaryTree( arr[0] );
-arr.slice(1).forEach( BT.insert.bind(BT) );
+var arr = [5, 1, 2];
+
+var BT = new BinaryTree();
+arr.forEach( BT.insert.bind(BT) );
 
 console.log('Min: %d; Max: %d', BT.findMin(), BT.findMax() );
+BT.remove(1);
+console.log('Min: %d; Max: %d', BT.findMin(), BT.findMax() );
 console.log('Traverse:');
-
-BT.traverse(function (value) {
-  console.log(value);
-});
+BT.traverse(console.log.bind(console));
