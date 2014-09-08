@@ -1,4 +1,6 @@
 var arr = require('./common').arr;
+var lowToHigh = require('./common').lowToHigh;
+
 var insertionSort = require('./insertion');
 var selectionSort = require('./selection');
 var bubbleSort = require('./bubble');
@@ -12,7 +14,7 @@ function run(label, sortFn) {
   var result;
 
   console.time(label);
-  result = sortFn(data);
+  result = sortFn(data, lowToHigh);
   console.timeEnd(label);
   console.log('Result: ', result, '\n');
 }
