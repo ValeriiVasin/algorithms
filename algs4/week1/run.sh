@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Example
+# ./run.sh input.txt
+
 # compile
 javac *.java
 
