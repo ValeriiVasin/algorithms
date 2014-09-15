@@ -3,21 +3,19 @@
 # Example
 # ./run.sh input.txt
 
-# compile
-javac *.java
+# compile and run
+# Notice: somehow `javac_algs4 *.java` compiles only first found class
+for file in *.java; do
+  javac_algs4 $file
 
-# run section
-echo "Quick Find:"
-java QuickFindUF < $1
-echo "\n"
+  # remove .java from the end to get classname
+  classname=${file/.java}
 
-echo "Quick Union:"
-java QuickUnionUF < $1
-echo "\n"
-
-echo "Weighted Quick Union:"
-java WeightedQuickUnionUF < $1
-echo "\n"
+  echo $classname
+  echo "====="
+  java_algs4 $classname < $1
+  echo "\n"
+done
 
 # cleanup
 rm *.class
