@@ -4,7 +4,6 @@
 # ./run.sh input.txt
 
 # compile and run
-# Notice: somehow `javac_algs4 *.java` compiles only first found class
 for file in *.java; do
   javac_algs4 $file
 
