@@ -1,3 +1,6 @@
+# Links
+[Code base](http://algs4.cs.princeton.edu/code)
+
 # Bash expansion
 
 Place code below into `algs4.bash` and add `source $HOME/algs4.bash` in `.profile`
