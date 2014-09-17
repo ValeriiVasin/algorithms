@@ -1,10 +1,9 @@
-/**
- * http://algs4.cs.princeton.edu/code/
- */
-
 public class Percolation {
   private boolean[] opened;
   private WeightedQuickUnionUF uf;
+
+  // extra structure to calculate filled is site or not
+  private WeightedQuickUnionUF ufFill;
 
   private int n;
 
@@ -27,6 +26,7 @@ public class Percolation {
     lastIndex = last - 1;
 
     uf = new WeightedQuickUnionUF(lastIndex + 1);
+    ufFill = new WeightedQuickUnionUF(lastIndex + 1);
 
     opened = new boolean[lastIndex + 1];
 
@@ -60,6 +60,7 @@ public class Percolation {
     // connect to top
     if (i == 1) {
       uf.union(id, 0);
+      ufFill.union(id, 0);
     }
 
     // connect to bottom
@@ -70,18 +71,22 @@ public class Percolation {
     // connect to neighbor
     if (i > 1 && isOpen(i - 1, j)) {
       uf.union(id, index(i - 1, j));
+      ufFill.union(id, index(i - 1, j));
     }
 
     if (i < n && isOpen(i + 1, j)) {
       uf.union(id, index(i + 1, j));
+      ufFill.union(id, index(i + 1, j));
     }
 
     if (j > 1 && isOpen(i, j - 1)) {
       uf.union(id, index(i, j - 1));
+      ufFill.union(id, index(i, j - 1));
     }
 
     if (j < n && isOpen(i, j + 1)) {
       uf.union(id, index(i, j + 1));
+      ufFill.union(id, index(i, j + 1));
     }
   }
 
@@ -95,7 +100,7 @@ public class Percolation {
   // is site (row i, column j) full?
   public boolean isFull(int i, int j) {
     checkIndices(i, j);
-    return isOpen(i, j) && uf.connected(0, index(i, j));
+    return isOpen(i, j) && ufFill.connected(0, index(i, j));
   }
 
   // does the system percolate?
