@@ -11,19 +11,9 @@ public class Percolation {
   // cache last cell value
   private int lastIndex;
 
-  private int index(int i, int j) {
-    return (i - 1) * n + (j - 1) + 1;
-  }
-
-  private void checkIndices(int i, int j) {
-    if (i < 1 || i > n || j < 1 || j > n) {
-      throw new IndexOutOfBoundsException();
-    }
-  }
-
   // create N-by-N grid, with all sites blocked
   public Percolation(int N) {
-    if ( N <= 0 ) {
+    if (N <= 0) {
       throw new IllegalArgumentException();
     }
 
@@ -46,11 +36,21 @@ public class Percolation {
     }
   }
 
+  private int index(int i, int j) {
+    return (i - 1) * n + (j - 1) + 1;
+  }
+
+  private void checkIndices(int i, int j) {
+    if (i < 1 || i > n || j < 1 || j > n) {
+      throw new IndexOutOfBoundsException();
+    }
+  }
+
   // open site (row i, column j) if it is not already
   public void open(int i, int j) {
     checkIndices(i, j);
 
-    if ( isOpen(i, j) ) {
+    if (isOpen(i, j)) {
       return;
     }
 
@@ -63,24 +63,24 @@ public class Percolation {
     }
 
     // connect to bottom
-    if ( i == n ) {
+    if (i == n) {
       uf.union(id, lastIndex);
     }
 
     // connect to neighbor
-    if ( i > 1 && isOpen(i - 1, j) ) {
+    if (i > 1 && isOpen(i - 1, j)) {
       uf.union(id, index(i - 1, j));
     }
 
-    if ( i < n && isOpen(i + 1, j) ) {
+    if (i < n && isOpen(i + 1, j)) {
       uf.union(id, index(i + 1, j));
     }
 
-    if ( j > 1 && isOpen(i, j - 1) ) {
+    if (j > 1 && isOpen(i, j - 1)) {
       uf.union(id, index(i, j - 1));
     }
 
-    if ( j < n && isOpen(i, j + 1) ) {
+    if (j < n && isOpen(i, j + 1)) {
       uf.union(id, index(i, j + 1));
     }
   }
@@ -101,25 +101,6 @@ public class Percolation {
   // does the system percolate?
   public boolean percolates() {
     return uf.connected(0, lastIndex);
-  }
-
-  private void debug() {
-    StdOut.println("Opened:");
-
-    for (int i = 1; i <= n; i++) {
-      for (int j = 1; j <= n; j++) {
-        StdOut.print(isOpen(i, j) ? " true; " : "false; ");
-      }
-      StdOut.println();
-    }
-
-    StdOut.println("Full:");
-    for (int i = 1; i <= n; i++) {
-      for (int j = 1; j <= n; j++) {
-        StdOut.print(isFull(i, j) ? " true; " : "false; ");
-      }
-      StdOut.println();
-    }
   }
 
   public static void main(String[] args) {

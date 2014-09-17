@@ -3,7 +3,7 @@ public class PercolationStats {
 
   // perform T independent computational experiments on an N-by-N grid
   public PercolationStats(int N, int T) {
-    if ( N < 0 || T < 0 ) {
+    if (N < 0 || T < 0) {
       throw new IllegalArgumentException();
     }
 
@@ -15,11 +15,11 @@ public class PercolationStats {
       Percolation p = new Percolation(N);
       boolean percolates = false;
 
-      while ( !percolates ) {
+      while (!percolates) {
         int rndI = 1 + StdRandom.uniform(N);
         int rndJ = 1 + StdRandom.uniform(N);
 
-        if ( !p.isOpen(rndI, rndJ) ) {
+        if (!p.isOpen(rndI, rndJ)) {
           p.open(rndI, rndJ);
           percolates = p.percolates();
           count += 1;
@@ -36,7 +36,7 @@ public class PercolationStats {
   }
 
   // sample standard deviation of percolation threshold
-  public double stddev(){
+  public double stddev() {
     return StdStats.stddev(results);
   }
 
