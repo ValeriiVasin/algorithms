@@ -4,7 +4,7 @@
 
 public class Percolation {
   public boolean[] opened;
-  private QuickUnionUF uf;
+  private WeightedQuickUnionUF uf;
 
   private int n;
 
@@ -36,7 +36,7 @@ public class Percolation {
     // array indexes starts from zero
     lastIndex = last - 1;
 
-    uf = new QuickUnionUF(lastIndex + 1);
+    uf = new WeightedQuickUnionUF(lastIndex + 1);
 
     opened = new boolean[lastIndex + 1];
 
