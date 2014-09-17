@@ -3,7 +3,7 @@
  */
 
 public class Percolation {
-  public boolean[] opened;
+  private boolean[] opened;
   private WeightedQuickUnionUF uf;
 
   private int n;
@@ -103,7 +103,7 @@ public class Percolation {
     return uf.connected(0, lastIndex);
   }
 
-  public void debug() {
+  private void debug() {
     StdOut.println("Opened:");
 
     for (int i = 1; i <= n; i++) {
@@ -123,15 +123,5 @@ public class Percolation {
   }
 
   public static void main(String[] args) {
-    // Percolation p = new Percolation(3);
-
-    // p.open(1, 1);
-    // p.open(3, 1);
-    // p.open(2, 1);
-    // p.open(2, 2);
-    // p.open(3, 3);
-
-    // p.debug();
-    // StdOut.print( p.percolates() );
   }
 }
