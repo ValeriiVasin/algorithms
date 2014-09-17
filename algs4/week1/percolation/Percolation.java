@@ -15,8 +15,17 @@ public class Percolation {
     return (i - 1) * n + (j - 1) + 1;
   }
 
+  private void checkIndices(int i, int j) {
+    if (i < 1 || i > n || j < 1 || j > n) {
+      throw new IndexOutOfBoundsException();
+    }
+  }
+
   // create N-by-N grid, with all sites blocked
   public Percolation(int N) {
+    if ( N <= 0 ) {
+      throw new IllegalArgumentException();
+    }
 
     // n + 2 is for virtual nodes
     // 0 - is for opened sites; otherwise - closed
@@ -39,6 +48,7 @@ public class Percolation {
 
   // open site (row i, column j) if it is not already
   public void open(int i, int j) {
+    checkIndices(i, j);
 
     if ( isOpen(i, j) ) {
       return;
@@ -46,8 +56,6 @@ public class Percolation {
 
     int id = index(i, j);
     opened[id] = true;
-
-    // StdOut.println("index: [" + i + "][" + j + "]=" + id);
 
     // connect to top
     if (i == 1) {
@@ -60,34 +68,33 @@ public class Percolation {
     }
 
     // connect to neighbor
-    if ( isOpen(i - 1, j) ) {
+    if ( i > 1 && isOpen(i - 1, j) ) {
       uf.union(id, index(i - 1, j));
     }
 
-    if ( isOpen(i + 1, j) ) {
+    if ( i < n && isOpen(i + 1, j) ) {
       uf.union(id, index(i + 1, j));
     }
 
-    if ( isOpen(i, j - 1) ) {
+    if ( j > 1 && isOpen(i, j - 1) ) {
       uf.union(id, index(i, j - 1));
     }
 
-    if ( isOpen(i, j + 1) ) {
+    if ( j < n && isOpen(i, j + 1) ) {
       uf.union(id, index(i, j + 1));
     }
   }
 
   // is site (row i, column j) open?
   public boolean isOpen(int i, int j) {
-    if ( i < 1 || i > n || j < 1 || j > n ) {
-      return false;
-    }
+    checkIndices(i, j);
 
     return opened[ index(i, j) ];
   }
 
   // is site (row i, column j) full?
   public boolean isFull(int i, int j) {
+    checkIndices(i, j);
     return isOpen(i, j) && uf.connected(0, index(i, j));
   }
 
