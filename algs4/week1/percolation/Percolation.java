@@ -47,7 +47,7 @@ public class Percolation {
     int id = index(i, j);
     opened[id] = true;
 
-    StdOut.println("index: [" + i + "][" + j + "]=" + id);
+    // StdOut.println("index: [" + i + "][" + j + "]=" + id);
 
     // connect to top
     if (i == 1) {
@@ -116,15 +116,15 @@ public class Percolation {
   }
 
   public static void main(String[] args) {
-    Percolation p = new Percolation(3);
+    // Percolation p = new Percolation(3);
 
-    p.open(1, 1);
-    p.open(3, 1);
-    p.open(2, 1);
-    p.open(2, 2);
-    p.open(3, 3);
+    // p.open(1, 1);
+    // p.open(3, 1);
+    // p.open(2, 1);
+    // p.open(2, 2);
+    // p.open(3, 3);
 
-    p.debug();
-    StdOut.print( p.percolates() );
+    // p.debug();
+    // StdOut.print( p.percolates() );
   }
 }
