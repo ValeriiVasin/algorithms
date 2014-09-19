@@ -1,7 +1,7 @@
-function sort(arr) {
+function sort(arr, callback) {
   var length = arr.length;
 
-  getGaps(length).forEach(function (gap) {
+  getGaps3xPlusOne(length).forEach(function (gap) {
 
     for (var i = gap; i < length; i += 1) {
       var value = arr[i];
@@ -13,9 +13,29 @@ function sort(arr) {
 
       arr[j] = value;
     }
+
+    if (typeof callback === 'function') {
+      callback(arr);
+    }
   });
 
   return arr;
+}
+
+/**
+ * Get gaps according to formula: 3x + 1
+ *
+ * @param  {Number} n Array length
+ * @return {Array}    Array of gaps
+ */
+function getGaps3xPlusOne(n) {
+  var gaps = [1];
+
+  while ( 3 * gaps[gaps.length - 1] + 1 < n ) {
+    gaps.push(3 * gaps[gaps.length - 1] + 1);
+  }
+
+  return gaps.reverse();
 }
 
 /**

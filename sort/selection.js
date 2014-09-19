@@ -4,7 +4,7 @@
  */
 var swap = require('./common').swap;
 
-function sort(arr) {
+function sort(arr, callback) {
   var length = arr.length;
   var minValue, minIndex, i, j;
 
@@ -20,6 +20,10 @@ function sort(arr) {
     }
 
     swap(arr, minIndex, i);
+
+    if (typeof callback === 'function') {
+      callback(arr);
+    }
   }
 
   return arr;

@@ -1,0 +1,16 @@
+lava   corn   flax   corn   lava   bole   bole   bole
+gray   gray   bole   ecru   fawn   corn   corn   corn
+corn   lava   corn   gray   corn   ecru   ecru   ecru
+rose   rose   leaf   lava   rose   fawn   fawn   fawn
+lime   lime   lava   lime   lime   flax   lime   flax
+pine   pine   fawn   navy   pine   gray   pine   gray
+ecru   ecru   ecru   pine   ecru   lava   gray   lava
+navy   navy   navy   rose   navy   leaf   navy   leaf
+wine   wine   lime   wine   wine   wine   wine   lime
+bole   bole   mist   bole   bole   pine   lava   mist
+palm   palm   gray   palm   palm   palm   palm   navy
+ruby   ruby   rose   ruby   ruby   ruby   ruby   palm
+flax   flax   wine   flax   flax   lime   flax   pine
+mist   mist   pine   mist   mist   mist   mist   rose
+fawn   fawn   palm   fawn   gray   rose   rose   ruby
+leaf   leaf   ruby   leaf   leaf   navy   leaf   wine

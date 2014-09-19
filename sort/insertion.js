@@ -3,7 +3,7 @@
  * http://en.wikipedia.org/wiki/Insertion_sort
  */
 
-function sort(arr) {
+function sort(arr, callback) {
   var length = arr.length;
   var i, j, value;
 
@@ -16,6 +16,10 @@ function sort(arr) {
     }
 
     arr[j] = value;
+
+    if (typeof callback === 'function') {
+      callback(arr);
+    }
   }
 
   return arr;
