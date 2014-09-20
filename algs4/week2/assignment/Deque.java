@@ -116,7 +116,8 @@ public class Deque<Item> implements Iterable<Item> {
 
         if (N == 0) {
             // we are removing last element
-            first = last = null;
+            first = null;
+            last = null;
         } else {
             last = last.prev;
             last.next = null;
