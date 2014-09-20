@@ -50,17 +50,18 @@ public class Deque<Item> implements Iterable<Item> {
         N += 1;
 
         if (N == 1) {
-            first = last = new Node();
+            first = new Node();
+            last = first;
             first.item = item;
             return;
         }
 
-        Node _first = first;
+        Node temp = first;
         first = new Node();
         first.item = item;
         first.prev = null;
-        first.next = _first;
-        _first.prev = first;
+        first.next = temp;
+        temp.prev = first;
     }
 
     public void addLast(Item item) {
@@ -71,17 +72,18 @@ public class Deque<Item> implements Iterable<Item> {
         N += 1;
 
         if (N == 1) {
-            first = last = new Node();
+            last = new Node();
+            first = last;
             first.item = item;
             return;
         }
 
-        Node _last = last;
+        Node temp = last;
         last = new Node();
         last.item = item;
         last.next = null;
-        last.prev = _last;
-        _last.next = last;
+        last.prev = temp;
+        temp.next = last;
     }
 
     public Item removeFirst() {
@@ -94,7 +96,8 @@ public class Deque<Item> implements Iterable<Item> {
 
         if (N == 0) {
             // we are removing last element
-            first = last = null;
+            first = null;
+            last = null;
         } else {
             first = first.next;
             first.prev = null;
