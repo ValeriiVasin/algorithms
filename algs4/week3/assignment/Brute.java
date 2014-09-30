@@ -44,6 +44,10 @@ public class Brute {
       }
 
       Insertion.sort(points);
+
+      StdDraw.setXscale(0, 32768);
+      StdDraw.setYscale(0, 32768);
+
       for (int ip = 0; ip < points.length - 3; ip++) {
         Point p = points[ip];
 
