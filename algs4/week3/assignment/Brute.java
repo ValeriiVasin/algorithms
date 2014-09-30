@@ -32,7 +32,6 @@ public class Brute {
       In file = new In(inputFile);
 
       int n = file.readInt();
-      StdOut.println("Amount: " + n);
 
       Point[] points = new Point[n];
       int i = 0;
