@@ -103,10 +103,6 @@ public class Point implements Comparable<Point> {
 
     // unit test
     public static void main(String[] args) {
-        /* YOUR CODE HERE */
-        Point a = new Point(0, 0);
-        Point b = new Point(1, 1);
 
-        a.drawTo(b);
     }
 }
