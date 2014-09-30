@@ -8,7 +8,7 @@ public class Point implements Comparable<Point> {
     private final int x;                              // x coordinate
     private final int y;                              // y coordinate
 
-    public static class BySlope implements Comparator<Point> {
+    private static class BySlope implements Comparator<Point> {
         Point p;
 
         public BySlope(Point p1) {
@@ -55,20 +55,19 @@ public class Point implements Comparable<Point> {
     // slope between this point and that point
     public double slopeTo(Point that) {
         /* YOUR CODE HERE */
-        if (this.x == that.x && this.y == that.y) {
+        if (that.x == x && that.y == y) {
             return Double.NEGATIVE_INFINITY;
         }
 
-        if (this.x == that.x) {
+        if (that.x == x) {
             return 0;
         }
 
-        if (this.y == that.y) {
+        if (that.y == y) {
             return Double.POSITIVE_INFINITY;
         }
 
-
-        return (that.y - this.y) / (that.x - this.x);
+        return (double) (that.y - y) / (that.x - x);
     }
 
     // is this point lexicographically smaller than that one?

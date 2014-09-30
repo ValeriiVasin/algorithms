@@ -1,6 +1,29 @@
 public class Brute {
-    public static boolean isCollinear(Point p, Point q, Point r, Point s) {
+    private static boolean isCollinear(Point p, Point q, Point r, Point s) {
       return p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(r) == p.slopeTo(s);
+    }
+
+    private static void output(Point p, Point q, Point r, Point s) {
+      Point[] points = {p, q, r, s};
+
+      for (int i = 0; i < points.length; i++) {
+        StdOut.print(points[i]);
+
+        if (i == points.length - 1) {
+          StdOut.println();
+        } else {
+          StdOut.print(" -> ");
+        }
+      }
+
+      p.draw();
+      q.draw();
+      r.draw();
+      s.draw();
+
+      p.drawTo(q);
+      p.drawTo(r);
+      p.drawTo(s);
     }
 
     public static void main(String[] args) {
@@ -21,6 +44,7 @@ public class Brute {
           points[i++] = new Point(x, y);
       }
 
+      Insertion.sort(points);
       for (int ip = 0; ip < points.length - 3; ip++) {
         Point p = points[ip];
 
@@ -30,26 +54,11 @@ public class Brute {
           for (int ir = iq + 1; ir < points.length - 1; ir++) {
             Point r = points[ir];
 
-            for (int is = ir + 1; is < points.length - 1; is++) {
+            for (int is = ir + 1; is < points.length; is++) {
               Point s = points[is];
 
               if (isCollinear(p, q, r, s)) {
-                StdOut.print(
-                  p.toString() + " -> " +
-                  q.toString() + " -> " +
-                  r.toString() + " -> " +
-                  s.toString()
-                );
-
-                p.draw();
-                q.draw();
-                r.draw();
-                s.draw();
-
-                p.drawTo(q);
-                p.drawTo(r);
-                p.drawTo(s);
-
+                output(p, q, r, s);
               }
             }
           }
