@@ -9,15 +9,15 @@ public class Point implements Comparable<Point> {
     private final int y;                              // y coordinate
 
     public static class BySlope implements Comparator<Point> {
-        private Point p;
+        Point p;
 
-        public BySlope(int x, int y) {
-            p = new Point(x, y);
+        public BySlope(Point p1) {
+            p = p1;
         }
 
         public int compare(Point a, Point b) {
-            double slopeA = a.slopeTo(p);
-            double slopeB = b.slopeTo(b);
+            double slopeA = p.slopeTo(a);
+            double slopeB = p.slopeTo(b);
 
             if (slopeA == slopeB) {
                 return 0;
@@ -37,7 +37,7 @@ public class Point implements Comparable<Point> {
         this.x = x;
         this.y = y;
 
-        SLOPE_ORDER = new BySlope(x, y);
+        SLOPE_ORDER = new BySlope(this);
     }
 
     // plot this point to standard drawing
@@ -104,5 +104,9 @@ public class Point implements Comparable<Point> {
     // unit test
     public static void main(String[] args) {
         /* YOUR CODE HERE */
+        Point a = new Point(0, 0);
+        Point b = new Point(1, 1);
+
+        a.drawTo(b);
     }
 }
