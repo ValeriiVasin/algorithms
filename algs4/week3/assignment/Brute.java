@@ -3,27 +3,41 @@ public class Brute {
       return p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(r) == p.slopeTo(s);
     }
 
-    private static void output(Point p, Point q, Point r, Point s) {
-      Point[] points = {p, q, r, s};
+    private static void output(int ip, int iq, int ir, int is, Point[] points, boolean[] drawnPoints, boolean[][] lines) {
+      int[] arr = {ip, iq, ir, is};
 
-      for (int i = 0; i < points.length; i++) {
-        StdOut.print(points[i]);
+      for (int i = 0; i < arr.length; i++) {
+        int index = arr[i];
+        Point point = points[ index ];
 
-        if (i == points.length - 1) {
+
+        // draw point
+        if (!drawnPoints[index]) {
+          drawnPoints[index] = true;
+          point.draw();
+        }
+
+        // we always draw p -> {x} line; point <p> is always first
+        if (i != 0) {
+          int pIndex = arr[0];
+          Point p = points[pIndex];
+
+          // add line
+          if (!lines[pIndex][index]) {
+            lines[pIndex][index] = true;
+            lines[index][pIndex] = true;
+            p.drawTo(point);
+          }
+        }
+
+        // stdout
+        StdOut.print(point);
+        if (i == arr.length - 1) {
           StdOut.println();
         } else {
           StdOut.print(" -> ");
         }
       }
-
-      p.draw();
-      q.draw();
-      r.draw();
-      s.draw();
-
-      p.drawTo(q);
-      p.drawTo(r);
-      p.drawTo(s);
     }
 
     public static void main(String[] args) {
@@ -48,6 +62,11 @@ public class Brute {
       StdDraw.setXscale(0, 32768);
       StdDraw.setYscale(0, 32768);
 
+      // points that has been drawn
+      boolean[] drawnPoints = new boolean[n];
+      // connections between lines
+      boolean[][] lines = new boolean[n][n];
+
       for (int ip = 0; ip < points.length - 3; ip++) {
         Point p = points[ip];
 
@@ -61,7 +80,7 @@ public class Brute {
               Point s = points[is];
 
               if (isCollinear(p, q, r, s)) {
-                output(p, q, r, s);
+                output(ip, iq, ir, is, points, drawnPoints, lines);
               }
             }
           }
