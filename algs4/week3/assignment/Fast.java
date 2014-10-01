@@ -1,3 +1,4 @@
+import java.util.Arrays;
 public class Fast {
     private static Point[] first;
     private static Point[] last;
@@ -41,7 +42,12 @@ public class Fast {
 
     private static boolean isUnique(Point pFirst, Point pLast) {
       for (int i = 0; i < segments; i++) {
-        if (first[i] == pFirst && last[i] == pLast) {
+        Point sFirst = first[i];
+        Point sLast  = last[i];
+        if (
+          (sFirst == pFirst || sFirst.compareTo(pFirst) == 0) &&
+          (sLast == pLast   || sLast.compareTo(pLast) == 0)
+        ) {
           return false;
         }
       }
@@ -89,7 +95,7 @@ public class Fast {
           }
         }
 
-        java.util.Arrays.sort(sorted, p.SLOPE_ORDER);
+        Arrays.sort(sorted, p.SLOPE_ORDER);
 
         int count = 1;
         double previousSlopeTo = p.slopeTo(sorted[0]);
