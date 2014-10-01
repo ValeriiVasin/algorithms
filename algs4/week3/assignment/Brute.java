@@ -3,43 +3,6 @@ public class Brute {
     return p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(r) == p.slopeTo(s);
   }
 
-  private static void output(int ip, int iq, int ir, int is, Point[] points, boolean[] drawnPoints, boolean[][] lines) {
-    int[] arr = {ip, iq, ir, is};
-
-    for (int i = 0; i < arr.length; i++) {
-      int index = arr[i];
-      Point point = points[ index ];
-
-
-      // draw point
-      if (!drawnPoints[index]) {
-        drawnPoints[index] = true;
-        point.draw();
-      }
-
-      // we draw only one line (from first to last points)
-      if (i == arr.length - 1) {
-        int pIndex = arr[0];
-        Point p = points[pIndex];
-
-        // add line
-        if (!lines[pIndex][index]) {
-          lines[pIndex][index] = true;
-          lines[index][pIndex] = true;
-          p.drawTo(point);
-        }
-      }
-
-      // stdout
-      StdOut.print(point);
-      if (i == arr.length - 1) {
-        StdOut.println();
-      } else {
-        StdOut.print(" -> ");
-      }
-    }
-  }
-
   public static void main(String[] args) {
     String inputFile = args[0];
 
@@ -62,10 +25,10 @@ public class Brute {
     StdDraw.setXscale(0, 32768);
     StdDraw.setYscale(0, 32768);
 
-    // points that has been drawn
-    boolean[] drawnPoints = new boolean[n];
-    // connections between lines
-    boolean[][] lines = new boolean[n][n];
+    // draw all points
+    for (i = 0; i < n; i++) {
+      points[i].draw();
+    }
 
     for (int ip = 0; ip < points.length - 3; ip++) {
       Point p = points[ip];
@@ -80,12 +43,12 @@ public class Brute {
             Point s = points[is];
 
             if (isCollinear(p, q, r, s)) {
-              output(ip, iq, ir, is, points, drawnPoints, lines);
+              StdOut.println(p + " -> " + q + " -> " + r + " -> " + s);
+              p.drawTo(s);
             }
           }
         }
       }
     }
-
   }
 }
