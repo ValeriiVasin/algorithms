@@ -32,16 +32,14 @@ public class Point implements Comparable<Point> {
         this.y = y;
     }
 
-    // plot this point to standard drawing
     public void draw() {
-        /* DO NOT MODIFY */
-        StdDraw.point(x, y);
+        StdDraw.setPenColor(255, 0, 0);
+        StdDraw.filledCircle(x, y, 256);
     }
 
-    // draw line between this point and that point to standard drawing
     public void drawTo(Point that) {
-        /* DO NOT MODIFY */
-        StdDraw.line(this.x, this.y, that.x, that.y);
+        StdDraw.setPenColor(0, 0, 0);
+        StdDraw.line(x, y, that.x, that.y);
     }
 
     // slope between this point and that point
