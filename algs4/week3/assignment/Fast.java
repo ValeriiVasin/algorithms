@@ -1,4 +1,8 @@
 public class Fast {
+    private static Point[] first;
+    private static Point[] last;
+    private static int segments = 0;
+
     private static void output(Point p, Point[] points, int lastIndex, int count) {
       Point[] arr = new Point[count + 1];
 
@@ -11,6 +15,13 @@ public class Fast {
 
       Insertion.sort(arr);
 
+      Point pFirst = arr[0];
+      Point pLast = arr[arr.length - 1];
+
+      if (!isUnique(pFirst, pLast)) {
+        return;
+      }
+
       for (int i = 0; i < arr.length; i++) {
         StdOut.print(arr[i]);
 
@@ -20,6 +31,22 @@ public class Fast {
           StdOut.print(" -> ");
         }
       }
+
+      first[segments] = pFirst;
+      last[segments]  = pLast;
+      segments++;
+
+      pFirst.drawTo(pLast);
+    }
+
+    private static boolean isUnique(Point pFirst, Point pLast) {
+      for (int i = 0; i < segments; i++) {
+        if (first[i] == pFirst && last[i] == pLast) {
+          return false;
+        }
+      }
+
+      return true;
     }
 
     public static void main(String[] args) {
@@ -41,6 +68,14 @@ public class Fast {
 
       StdDraw.setXscale(0, 32768);
       StdDraw.setYscale(0, 32768);
+
+      // draw all points
+      for (i = 0; i < n; i++) {
+        points[i].draw();
+      }
+
+      first = new Point[n];
+      last = new Point[n];
 
       for (i = 0; i < n; i++) {
         Point p = points[i];
