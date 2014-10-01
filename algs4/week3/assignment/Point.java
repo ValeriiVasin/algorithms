@@ -3,21 +3,15 @@ import java.util.Comparator;
 public class Point implements Comparable<Point> {
 
     // compare points by slope
-    public final Comparator<Point> SLOPE_ORDER;
+    public final Comparator<Point> SLOPE_ORDER = new BySlope();
 
     private final int x;                              // x coordinate
     private final int y;                              // y coordinate
 
-    private static class BySlope implements Comparator<Point> {
-        Point p;
-
-        public BySlope(Point p1) {
-            p = p1;
-        }
-
+    private class BySlope implements Comparator<Point> {
         public int compare(Point a, Point b) {
-            double slopeA = p.slopeTo(a);
-            double slopeB = p.slopeTo(b);
+            double slopeA = Point.this.slopeTo(a);
+            double slopeB = Point.this.slopeTo(b);
 
             if (slopeA == slopeB) {
                 return 0;
@@ -36,8 +30,6 @@ public class Point implements Comparable<Point> {
         /* DO NOT MODIFY */
         this.x = x;
         this.y = y;
-
-        SLOPE_ORDER = new BySlope(this);
     }
 
     // plot this point to standard drawing
@@ -54,17 +46,16 @@ public class Point implements Comparable<Point> {
 
     // slope between this point and that point
     public double slopeTo(Point that) {
-        /* YOUR CODE HERE */
         if (that.x == x && that.y == y) {
             return Double.NEGATIVE_INFINITY;
         }
 
         if (that.x == x) {
-            return 0;
+            return Double.POSITIVE_INFINITY;
         }
 
         if (that.y == y) {
-            return Double.POSITIVE_INFINITY;
+            return 0;
         }
 
         return (double) (that.y - y) / (that.x - x);
@@ -73,8 +64,6 @@ public class Point implements Comparable<Point> {
     // is this point lexicographically smaller than that one?
     // comparing y-coordinates and breaking ties by x-coordinates
     public int compareTo(Point that) {
-        /* YOUR CODE HERE */
-
         if (this.y < that.y) {
             return -1;
         }
