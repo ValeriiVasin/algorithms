@@ -122,6 +122,7 @@ public class Fast {
         int count = 1;
         double previousSlopeTo = p.slopeTo(sortedBySlope[0]);
         double currentSlopeTo;
+
         for (int j = 1; j < sortedBySlope.length; j++) {
           currentSlopeTo = p.slopeTo(sortedBySlope[j]);
 
@@ -137,6 +138,10 @@ public class Fast {
           }
 
           previousSlopeTo = currentSlopeTo;
+        }
+
+        if (count >= 3) {
+          output(p, sortedBySlope, sortedBySlope.length - 1, count, segments);
         }
       }
 
