@@ -22,7 +22,6 @@ public class Fast {
 
       // sort
       Arrays.sort(points);
-      StdOut.println(points.length);
 
       // remove duplicates
       Point[] temp = new Point[n];
@@ -41,8 +40,6 @@ public class Fast {
       for (int i = 0; i <= index; i++) {
         points[i] = temp[i];
       }
-
-      StdOut.println(points.length);
     }
 
     private static void output(Point p, Point[] points, int lastIndex, int count) {
@@ -55,7 +52,7 @@ public class Fast {
         arr[index++] = points[i];
       }
 
-      Merge.sort(arr);
+      Arrays.sort(arr);
 
       Point pFirst = arr[0];
       Point pLast = arr[arr.length - 1];
