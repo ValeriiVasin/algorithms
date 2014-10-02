@@ -21,7 +21,7 @@ algs4() {
 
   # remove .java from the end to get classname
   local classname=${filename/.java}
-  javac_algs4 $filename && java_algs4 $classname
+  javac_algs4 $filename && java_algs4 $classname ${@:2}
 
   # cleanup
   rm $classname.class
