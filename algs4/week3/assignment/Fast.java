@@ -1,8 +1,6 @@
 import java.util.Arrays;
 public class Fast {
-    private static Point[] first;
-    private static Point[] last;
-    private static int segments = 0;
+    private static Bag<String> segments = new Bag<String>();
 
     private static void output(Point p, Point[] points, int lastIndex, int count) {
       Point[] arr = new Point[count + 1];
@@ -19,35 +17,28 @@ public class Fast {
       Point pFirst = arr[0];
       Point pLast = arr[arr.length - 1];
 
-      if (!isUnique(pFirst, pLast)) {
-        return;
-      }
-
+      StringBuilder s = new StringBuilder();
       for (int i = 0; i < arr.length; i++) {
-        StdOut.print(arr[i]);
+        s.append(arr[i]);
 
-        if (i == arr.length - 1) {
-          StdOut.println();
-        } else {
-          StdOut.print(" -> ");
+        if (i != arr.length - 1) {
+          s.append(" -> ");
         }
       }
+      String path = s.toString();
 
-      first[segments] = pFirst;
-      last[segments]  = pLast;
-      segments++;
 
-      pFirst.drawTo(pLast);
+      if (isUnique(path)) {
+        StdOut.println(path);
+        segments.add(path);
+        pFirst.drawTo(pLast);
+      }
+
     }
 
-    private static boolean isUnique(Point pFirst, Point pLast) {
-      for (int i = 0; i < segments; i++) {
-        Point sFirst = first[i];
-        Point sLast  = last[i];
-        if (
-          (sFirst == pFirst || sFirst.compareTo(pFirst) == 0) &&
-          (sLast == pLast   || sLast.compareTo(pLast) == 0)
-        ) {
+    private static boolean isUnique(String s) {
+      for (String str:segments) {
+        if (str.equals(s)) {
           return false;
         }
       }
@@ -79,9 +70,6 @@ public class Fast {
       for (i = 0; i < n; i++) {
         points[i].draw();
       }
-
-      first = new Point[n];
-      last = new Point[n];
 
       for (i = 0; i < n; i++) {
         Point p = points[i];
