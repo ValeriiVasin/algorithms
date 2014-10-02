@@ -102,6 +102,10 @@ public class Fast {
         points[i].draw();
       }
 
+      if (points.length < 4) {
+        return;
+      }
+
       for (int i = 0; i < points.length; i++) {
         Point p = points[i];
         Point[] sortedBySlope = new Point[points.length - 1];
