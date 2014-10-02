@@ -16,27 +16,6 @@ public class Fast {
         points[j++] = new Point(x, y);
       }
 
-      // sort
-      Arrays.sort(points);
-
-      // remove duplicates
-      Point[] temp = new Point[n];
-      int index = 0;
-      temp[0] = points[0];
-      for (int i = 1; i < n; i++) {
-
-        // add if not equal to previously saved
-        if (temp[index].compareTo(points[i]) != 0) {
-          index++;
-          temp[index] = points[i];
-        }
-      }
-
-      points = new Point[index + 1];
-      for (int i = 0; i <= index; i++) {
-        points[i] = temp[i];
-      }
-
       return points;
     }
 
