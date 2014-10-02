@@ -1,16 +1,12 @@
 import java.util.Arrays;
 public class Fast {
-    private static Bag<String> segments = new Bag<String>();
-
-    private static int n;
-    private static Point[] points;
 
     // read points, sort, remove duplicates
-    private static void read(String filename) {
+    private static Point[] read(String filename) {
       In file = new In(filename);
 
-      n = file.readInt();
-      points = new Point[n];
+      int n = file.readInt();
+      Point[] points = new Point[n];
 
       int j = 0;
       while (!file.isEmpty()) {
@@ -40,9 +36,25 @@ public class Fast {
       for (int i = 0; i <= index; i++) {
         points[i] = temp[i];
       }
+
+      return points;
     }
 
-    private static void output(Point p, Point[] points, int lastIndex, int count) {
+    private static String getSegment(Point[] points) {
+      StringBuilder s = new StringBuilder();
+
+      for (int i = 0; i < points.length; i++) {
+        s.append(points[i]);
+
+        if (i != points.length - 1) {
+          s.append(" -> ");
+        }
+      }
+
+      return s.toString();
+    }
+
+    private static void output(Point p, Point[] points, int lastIndex, int count, Bag<String> segments) {
       Point[] arr = new Point[count + 1];
 
       arr[0] = p;
@@ -57,38 +69,30 @@ public class Fast {
       Point pFirst = arr[0];
       Point pLast = arr[arr.length - 1];
 
-      StringBuilder s = new StringBuilder();
-      for (int i = 0; i < arr.length; i++) {
-        s.append(arr[i]);
+      String segment = getSegment(arr);
 
-        if (i != arr.length - 1) {
-          s.append(" -> ");
-        }
-      }
-      String path = s.toString();
-
-
-      if (isUnique(path)) {
-        StdOut.println(path);
-        segments.add(path);
+      if (!contains(segments, segment)) {
+        segments.add(segment);
+        StdOut.println(segment);
         pFirst.drawTo(pLast);
       }
-
     }
 
-    private static boolean isUnique(String s) {
-      for (String str:segments) {
-        if (str.equals(s)) {
-          return false;
+    private static boolean contains(Bag<String> segments, String segment) {
+      for (String seg:segments) {
+        if (seg.equals(segment)) {
+          return true;
         }
       }
 
-      return true;
+      return false;
     }
 
     public static void main(String[] args) {
       String filename = args[0];
-      read(filename);
+      Bag<String> segments = new Bag<String>();
+
+      Point[] points = read(filename);
 
       StdDraw.setXscale(0, 32768);
       StdDraw.setYscale(0, 32768);
@@ -125,7 +129,7 @@ public class Fast {
             count++;
           } else {
             if (count >= 3) {
-              output(p, sortedBySlope, j - 1, count);
+              output(p, sortedBySlope, j - 1, count, segments);
             }
 
             // reset count
