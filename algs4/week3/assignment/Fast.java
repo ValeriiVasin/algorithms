@@ -2,6 +2,24 @@ import java.util.Arrays;
 public class Fast {
     private static Bag<String> segments = new Bag<String>();
 
+    private static int n;
+    private static Point[] points;
+
+    private static void read(String filename) {
+      In file = new In(filename);
+
+      n = file.readInt();
+      points = new Point[n];
+
+      int i = 0;
+      while (!file.isEmpty()) {
+        int x = file.readInt();
+        int y = file.readInt();
+
+        points[i++] = new Point(x, y);
+      }
+    }
+
     private static void output(Point p, Point[] points, int lastIndex, int count) {
       Point[] arr = new Point[count + 1];
 
@@ -47,31 +65,18 @@ public class Fast {
     }
 
     public static void main(String[] args) {
-      String inputFile = args[0];
-
-      In file = new In(inputFile);
-
-      int n = file.readInt();
-
-      Point[] points = new Point[n];
-
-      int i = 0;
-      while (!file.isEmpty()) {
-          int x = file.readInt();
-          int y = file.readInt();
-
-          points[i++] = new Point(x, y);
-      }
+      String filename = args[0];
+      read(filename);
 
       StdDraw.setXscale(0, 32768);
       StdDraw.setYscale(0, 32768);
 
       // draw all points
-      for (i = 0; i < n; i++) {
+      for (int i = 0; i < n; i++) {
         points[i].draw();
       }
 
-      for (i = 0; i < n; i++) {
+      for (int i = 0; i < n - 3; i++) {
         Point p = points[i];
 
         Point[] sorted = new Point[n - 1];
