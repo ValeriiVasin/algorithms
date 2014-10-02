@@ -10,6 +10,10 @@ public class Point implements Comparable<Point> {
 
     private class BySlope implements Comparator<Point> {
         public int compare(Point a, Point b) {
+            if (a == null || b == null) {
+                throw new NullPointerException();
+            }
+
             double slopeA = Point.this.slopeTo(a);
             double slopeB = Point.this.slopeTo(b);
 
@@ -44,6 +48,10 @@ public class Point implements Comparable<Point> {
 
     // slope between this point and that point
     public double slopeTo(Point that) {
+        if (that == null) {
+            throw new NullPointerException();
+        }
+
         if (that.x == x && that.y == y) {
             return Double.NEGATIVE_INFINITY;
         }
@@ -62,6 +70,10 @@ public class Point implements Comparable<Point> {
     // is this point lexicographically smaller than that one?
     // comparing y-coordinates and breaking ties by x-coordinates
     public int compareTo(Point that) {
+        if (that == null) {
+            throw new NullPointerException();
+        }
+
         if (this.y < that.y) {
             return -1;
         }
