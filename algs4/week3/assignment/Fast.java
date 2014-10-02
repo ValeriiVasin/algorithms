@@ -120,13 +120,9 @@ public class Fast {
 
         // find segments with more than 3 points in a row with same slope
         int count = 1;
-        double previousSlopeTo = p.slopeTo(sortedBySlope[0]);
-        double currentSlopeTo;
 
         for (int j = 1; j < sortedBySlope.length; j++) {
-          currentSlopeTo = p.slopeTo(sortedBySlope[j]);
-
-          if (currentSlopeTo == previousSlopeTo) {
+          if (p.slopeTo(sortedBySlope[j-1]) == p.slopeTo(sortedBySlope[j])) {
             count++;
           } else {
             if (count >= 3) {
@@ -136,8 +132,6 @@ public class Fast {
             // reset count
             count = 1;
           }
-
-          previousSlopeTo = currentSlopeTo;
         }
 
         if (count >= 3) {
