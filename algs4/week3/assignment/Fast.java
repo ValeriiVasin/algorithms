@@ -1,6 +1,8 @@
 import java.util.Arrays;
 public class Fast {
 
+    private static String segments;
+
     // read points, sort, remove duplicates
     private static Point[] read(String filename) {
       In file = new In(filename);
@@ -20,20 +22,20 @@ public class Fast {
     }
 
     private static String getSegment(Point[] points) {
-      StringBuilder s = new StringBuilder();
+      String s = "";
 
       for (int i = 0; i < points.length; i++) {
-        s.append(points[i]);
+        s += points[i].toString();
 
         if (i != points.length - 1) {
-          s.append(" -> ");
+          s += " -> ";
         }
       }
 
-      return s.toString();
+      return s;
     }
 
-    private static void output(Point p, Point[] points, int lastIndex, int count, Bag<String> segments) {
+    private static void output(Point p, Point[] points, int lastIndex, int count) {
       Point[] arr = new Point[count + 1];
 
       arr[0] = p;
@@ -50,26 +52,17 @@ public class Fast {
 
       String segment = getSegment(arr);
 
-      if (!contains(segments, segment)) {
-        segments.add(segment);
+      if (!segments.contains("#" + segment + "#")) {
+        segments += "#" + segment + "#";
         StdOut.println(segment);
         pFirst.drawTo(pLast);
       }
     }
 
-    private static boolean contains(Bag<String> segments, String segment) {
-      for (String seg:segments) {
-        if (seg.equals(segment)) {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
     public static void main(String[] args) {
       String filename = args[0];
-      Bag<String> segments = new Bag<String>();
+
+      segments = "";
 
       Point[] points = read(filename);
 
@@ -109,7 +102,7 @@ public class Fast {
             count++;
           } else {
             if (count >= 3) {
-              output(p, sortedBySlope, j - 1, count, segments);
+              output(p, sortedBySlope, j - 1, count);
             }
 
             // reset count
@@ -118,7 +111,7 @@ public class Fast {
         }
 
         if (count >= 3) {
-          output(p, sortedBySlope, sortedBySlope.length - 1, count, segments);
+          output(p, sortedBySlope, sortedBySlope.length - 1, count);
         }
       }
 
