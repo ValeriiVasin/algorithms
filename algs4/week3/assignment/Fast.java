@@ -49,11 +49,11 @@ public class Fast {
 
       Point pFirst = arr[0];
       Point pLast = arr[arr.length - 1];
+      String search = "#" + pFirst + pLast + "#";
 
-      String segment = getSegment(arr);
-
-      if (!segments.contains("#" + segment + "#")) {
-        segments += "#" + segment + "#";
+      if (!segments.contains(search)) {
+        segments += search;
+        String segment = getSegment(arr);
         StdOut.println(segment);
         pFirst.drawTo(pLast);
       }
