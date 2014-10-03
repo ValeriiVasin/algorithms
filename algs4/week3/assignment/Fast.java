@@ -4,16 +4,15 @@ public class Fast {
     private static Stack<CheckPoint> checkpoint;
 
     private static class CheckPoint {
-      Point point;
-      double slope;
+      Point first, last;
 
-      public CheckPoint(Point p, double slope) {
-        this.point = p;
-        this.slope = slope;
+      public CheckPoint(Point first, Point last) {
+        this.first = first;
+        this.last = last;
       }
 
-      public boolean check(Point p, double slope) {
-        return this.point.slopeTo(p) == slope;
+      public boolean check(Point first, Point last) {
+        return this.first.compareTo(first) == 0 && this.last.compareTo(last) == 0;
       }
     }
 
@@ -49,9 +48,9 @@ public class Fast {
       return s;
     }
 
-    private static boolean contains(Point p, double slope) {
+    private static boolean contains(Point first, Point last) {
       for (CheckPoint c:checkpoint) {
-        if (c.check(p, slope)) {
+        if (c.check(first, last)) {
           return true;
         }
       }
@@ -62,28 +61,32 @@ public class Fast {
     private static void output(Point p, Point[] points, int lastIndex, int count) {
       double slope = p.slopeTo(points[lastIndex]);
 
-      if (contains(p, slope)) {
+      int firstIndex = lastIndex - count + 1;
+      Point[] sorted = new Point[count + 1];
+
+      sorted[0] = p;
+      int size  = 1;
+
+      for (int i = firstIndex; i <= lastIndex; i++) {
+        sorted[size++] = points[i];
+      }
+
+      Arrays.sort(sorted);
+
+      Point pFirst = sorted[0];
+      Point pLast  = sorted[sorted.length - 1];
+
+      if (contains(pFirst, pLast)) {
         return;
       }
 
-      checkpoint.push(new CheckPoint(p, slope));
+      checkpoint.push( new CheckPoint(pFirst, pLast) );
 
-      Point[] arr = new Point[count + 1];
-
-      arr[0] = p;
-      int index = 1;
-
-      for (int i = lastIndex - count + 1; i <= lastIndex; i++) {
-        arr[index++] = points[i];
+      for (int i = 0; i < sorted.length; i++) {
+        StdOut.print(sorted[i]);
+        StdOut.print(i == sorted.length - 1 ? "\n" : " -> ");
       }
 
-      Arrays.sort(arr);
-
-      Point pFirst = arr[0];
-      Point pLast = arr[arr.length - 1];
-
-      String segment = getSegment(arr);
-      StdOut.println(segment);
       pFirst.drawTo(pLast);
     }
 
@@ -126,7 +129,7 @@ public class Fast {
         int count = 1;
 
         for (int j = 1; j < sortedBySlope.length; j++) {
-          if (p.slopeTo(sortedBySlope[j-1]) == p.slopeTo(sortedBySlope[j])) {
+          if (p.slopeTo(sortedBySlope[j - 1]) == p.slopeTo(sortedBySlope[j])) {
             count++;
           } else {
             if (count >= 3) {
