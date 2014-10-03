@@ -1,7 +1,21 @@
 import java.util.Arrays;
 public class Fast {
 
-    private static String segments;
+    private static Stack<CheckPoint> checkpoint;
+
+    private static class CheckPoint {
+      Point point;
+      double slope;
+
+      public CheckPoint(Point p, double slope) {
+        this.point = p;
+        this.slope = slope;
+      }
+
+      public boolean check(Point p, double slope) {
+        return this.point.slopeTo(p) == slope;
+      }
+    }
 
     // read points, sort, remove duplicates
     private static Point[] read(String filename) {
@@ -35,7 +49,25 @@ public class Fast {
       return s;
     }
 
+    private static boolean contains(Point p, double slope) {
+      for (CheckPoint c:checkpoint) {
+        if (c.check(p, slope)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
     private static void output(Point p, Point[] points, int lastIndex, int count) {
+      double slope = p.slopeTo(points[lastIndex]);
+
+      if (contains(p, slope)) {
+        return;
+      }
+
+      checkpoint.push(new CheckPoint(p, slope));
+
       Point[] arr = new Point[count + 1];
 
       arr[0] = p;
@@ -49,20 +81,16 @@ public class Fast {
 
       Point pFirst = arr[0];
       Point pLast = arr[arr.length - 1];
-      String search = "#" + pFirst + pLast + "#";
 
-      if (!segments.contains(search)) {
-        segments += search;
-        String segment = getSegment(arr);
-        StdOut.println(segment);
-        pFirst.drawTo(pLast);
-      }
+      String segment = getSegment(arr);
+      StdOut.println(segment);
+      pFirst.drawTo(pLast);
     }
 
     public static void main(String[] args) {
       String filename = args[0];
 
-      segments = "";
+      checkpoint = new Stack<CheckPoint>();
 
       Point[] points = read(filename);
 
