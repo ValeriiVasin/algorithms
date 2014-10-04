@@ -1,20 +1,8 @@
 import java.util.Arrays;
+import java.util.Hashtable;
+
 public class Fast {
-
-    private static Stack<CheckPoint> checkpoint;
-
-    private static class CheckPoint {
-      Point first, last;
-
-      public CheckPoint(Point first, Point last) {
-        this.first = first;
-        this.last = last;
-      }
-
-      public boolean check(Point first, Point last) {
-        return this.first.compareTo(first) == 0 && this.last.compareTo(last) == 0;
-      }
-    }
+    private static Hashtable<String, Boolean> segments;
 
     // read points, sort, remove duplicates
     private static Point[] read(String filename) {
@@ -48,16 +36,6 @@ public class Fast {
       return s;
     }
 
-    private static boolean contains(Point first, Point last) {
-      for (CheckPoint c:checkpoint) {
-        if (c.check(first, last)) {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
     private static void output(Point p, Point[] points, int lastIndex, int count) {
       double slope = p.slopeTo(points[lastIndex]);
 
@@ -76,11 +54,11 @@ public class Fast {
       Point pFirst = sorted[0];
       Point pLast  = sorted[sorted.length - 1];
 
-      if (contains(pFirst, pLast)) {
+      if (segments.containsKey(pFirst.toString() + pLast.toString())) {
         return;
       }
 
-      checkpoint.push( new CheckPoint(pFirst, pLast) );
+      segments.put(pFirst.toString() + pLast.toString(), true);
 
       for (int i = 0; i < sorted.length; i++) {
         StdOut.print(sorted[i]);
@@ -93,9 +71,8 @@ public class Fast {
     public static void main(String[] args) {
       String filename = args[0];
 
-      checkpoint = new Stack<CheckPoint>();
-
       Point[] points = read(filename);
+      segments = new Hashtable<String, Boolean>(points.length * points.length);
 
       StdDraw.setXscale(0, 32768);
       StdDraw.setYscale(0, 32768);
