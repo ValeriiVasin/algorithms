@@ -63,7 +63,7 @@ public class Fast {
       for (int i = 0; i < sorted.length; i++) {
         StdOut.print(sorted[i]);
 
-        if (i != sorted.length) {
+        if (i != sorted.length - 1) {
           StdOut.print(" -> ");
         }
       }
