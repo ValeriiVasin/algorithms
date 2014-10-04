@@ -1,8 +1,6 @@
 import java.util.Arrays;
-import java.util.Hashtable;
 
 public class Fast {
-    private static Hashtable<String, Boolean> segments;
 
     // read points, sort, remove duplicates
     private static Point[] read(String filename) {
@@ -22,61 +20,29 @@ public class Fast {
       return points;
     }
 
-    private static String getSegment(Point[] points) {
-      String s = "";
-
-      for (int i = 0; i < points.length; i++) {
-        s += points[i].toString();
-
-        if (i != points.length - 1) {
-          s += " -> ";
-        }
-      }
-
-      return s;
-    }
-
     private static void output(Point p, Point[] points, int lastIndex, int count) {
-      double slope = p.slopeTo(points[lastIndex]);
-
       int firstIndex = lastIndex - count + 1;
-      Point[] sorted = new Point[count + 1];
 
-      sorted[0] = p;
-      int size  = 1;
-
-      for (int i = firstIndex; i <= lastIndex; i++) {
-        sorted[size++] = points[i];
-      }
-
-      Arrays.sort(sorted);
-
-      Point pFirst = sorted[0];
-      Point pLast  = sorted[sorted.length - 1];
-
-      if (segments.containsKey(pFirst.toString() + pLast.toString())) {
+      // if p is not leftmost point of the line - do nothing
+      // provided points are already sorted, because merge sort which
+      // is used for sorting objects in Java is stable - after sorting
+      // by slopes points with same slope are already in order
+      if (p.compareTo(points[firstIndex]) >= 0) {
         return;
       }
 
-      segments.put(pFirst.toString() + pLast.toString(), true);
-
-      for (int i = 0; i < sorted.length; i++) {
-        StdOut.print(sorted[i]);
-
-        if (i != sorted.length - 1) {
-          StdOut.print(" -> ");
-        }
+      StdOut.print(p);
+      for (int i = firstIndex; i <= lastIndex; i++) {
+        StdOut.print(" -> " + points[i]);
       }
       StdOut.println();
-
-      pFirst.drawTo(pLast);
+      p.drawTo(points[lastIndex]);
     }
 
     public static void main(String[] args) {
       String filename = args[0];
 
       Point[] points = read(filename);
-      segments = new Hashtable<String, Boolean>(points.length * points.length);
 
       StdDraw.setXscale(0, 32768);
       StdDraw.setYscale(0, 32768);
@@ -89,6 +55,9 @@ public class Fast {
       if (points.length < 4) {
         return;
       }
+
+      // sort points before start
+      Arrays.sort(points);
 
       for (int i = 0; i < points.length; i++) {
         Point p = points[i];
@@ -122,6 +91,7 @@ public class Fast {
           }
         }
 
+        // check last segment
         if (count >= 3) {
           output(p, sortedBySlope, sortedBySlope.length - 1, count);
         }
