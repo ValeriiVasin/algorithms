@@ -62,8 +62,12 @@ public class Fast {
 
       for (int i = 0; i < sorted.length; i++) {
         StdOut.print(sorted[i]);
-        StdOut.print(i == sorted.length - 1 ? "\n" : " -> ");
+
+        if (i != sorted.length) {
+          StdOut.print(" -> ");
+        }
       }
+      StdOut.println();
 
       pFirst.drawTo(pLast);
     }
