@@ -8,6 +8,7 @@ public class Board implements Comparable<Board> {
 
     private int cachedHamming = -1;
     private int cachedManhattan = -1;
+    private String cacheToString = null;
 
     // exchange blocks and return new blocks array
     private int[][] exch(int[][] blocks, int i1, int j1, int i2, int j2) {
@@ -180,6 +181,10 @@ public class Board implements Comparable<Board> {
 
     // string representation of this board (in the output format specified below)
     public String toString() {
+        if (cacheToString != null) {
+            return cacheToString;
+        }
+
         StringBuilder s = new StringBuilder();
 
         s.append(N + "\n");
@@ -191,13 +196,15 @@ public class Board implements Comparable<Board> {
             s.append("\n");
         }
 
-        return s.toString();
+        cacheToString = s.toString();
+
+        return cacheToString;
     }
 
     public int compareTo(Board board) {
-        if (this.hamming() > board.hamming()) {
+        if (this.manhattan() > board.manhattan()) {
             return 1;
-        } else if (this.hamming() == board.hamming()) {
+        } else if (this.manhattan() == board.manhattan()) {
             return 0;
         } else {
             return -1;
