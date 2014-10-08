@@ -53,17 +53,18 @@ public class Solver {
 
         boolean solved = false;
 
+        Board main = initial;
         while (!solved) {
-          for (Board board : initial.neighbors()) {
+          for (Board board : main.neighbors()) {
               if (!hash.containsKey(board.toString())) {
                   hash.put(board.toString(), true);
                   PQ.insert(board);
               }
           }
 
-          initial = PQ.delMin();
-          q.enqueue(initial);
-          if (initial.isGoal()) {
+          main = PQ.delMin();
+          q.enqueue(main);
+          if (main.isGoal()) {
             solved = true;
             solvable = true;
           }
@@ -93,8 +94,13 @@ public class Solver {
     // min number of moves to solve initial board; -1 if unsolvable
     public int moves() {
 
-      // size - 1 because of initial size is also there
-      return isSolvable() ? q.size() - 1 : -1;
+      if (isSolvable()) {
+
+        // size - 1 because of initial size is also there
+        return q.size() - 1;
+      } else {
+        return -1;
+      }
     }
 
     // sequence of boards in a shortest solution; null if unsolvable

@@ -8,9 +8,16 @@ public class Board {
     private int cachedManhattan = -1;
     private String cacheToString = null;
 
+    // construct a board from an N-by-N array of blocks
+    // (where blocks[i][j] = block in row i, column j)
+    public Board(int[][] initialBlocks) {
+        N = initialBlocks[0].length;
+        this.blocks = initialBlocks;
+    }
+
     // exchange blocks and return new blocks array
-    private int[][] exch(int[][] blocks, int i1, int j1, int i2, int j2) {
-        int[][] blocksCopy = copy(blocks);
+    private int[][] exch(int[][] initialBlocks, int i1, int j1, int i2, int j2) {
+        int[][] blocksCopy = copy(initialBlocks);
 
         int temp = blocksCopy[i1][j1];
         blocksCopy[i1][j1] = blocksCopy[i2][j2];
@@ -31,13 +38,6 @@ public class Board {
         }
 
         return blocksCopy;
-    }
-
-    // construct a board from an N-by-N array of blocks
-    // (where blocks[i][j] = block in row i, column j)
-    public Board(int[][] blocks) {
-        N = blocks[0].length;
-        this.blocks = blocks;
     }
 
     // board dimension N
@@ -133,7 +133,7 @@ public class Board {
 
         Board board = (Board) y;
 
-        return this.toString() == board.toString();
+        return this.toString().equals(board.toString());
     }
 
     // all neighboring boards
