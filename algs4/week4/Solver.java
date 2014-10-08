@@ -67,7 +67,9 @@ public class Solver {
 
     // min number of moves to solve initial board; -1 if unsolvable
     public int moves() {
-      return isSolvable() ? q.size() : -1;
+
+      // size - 1 because of initial size is also there
+      return isSolvable() ? q.size() - 1 : -1;
     }
 
     // sequence of boards in a shortest solution; null if unsolvable
