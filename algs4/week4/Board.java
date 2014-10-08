@@ -1,6 +1,4 @@
-import java.util.Comparator;
-
-public class Board implements Comparable<Board> {
+public class Board {
     private int[][] blocks;
 
     // dimension
@@ -199,16 +197,6 @@ public class Board implements Comparable<Board> {
         cacheToString = s.toString();
 
         return cacheToString;
-    }
-
-    public int compareTo(Board board) {
-        if (this.manhattan() > board.manhattan()) {
-            return 1;
-        } else if (this.manhattan() == board.manhattan()) {
-            return 0;
-        } else {
-            return -1;
-        }
     }
 
     // unit tests (not graded)

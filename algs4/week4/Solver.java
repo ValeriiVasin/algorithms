@@ -1,9 +1,34 @@
 import java.util.HashMap;
+import java.util.Comparator;
 
 public class Solver {
     private HashMap<String, Boolean> hash, twinHash;
     private MinPQ<Board> PQ, twinPQ;
     private Queue<Board> q;
+
+    // compare points by slope
+    private final Comparator<Board> CMP = new ManhattanComparator();
+
+    private class ManhattanComparator implements Comparator<Board> {
+        public int compare(Board a, Board b) {
+            if (a == null || b == null) {
+                throw new NullPointerException();
+            }
+
+            double manhattanA = a.manhattan();
+            double manhattanB = b.manhattan();
+
+            if (manhattanA == manhattanB) {
+                return 0;
+            }
+
+            if (manhattanA > manhattanB) {
+                return 1;
+            }
+
+            return -1;
+        }
+    }
 
     private boolean solvable = false;
 
@@ -13,7 +38,7 @@ public class Solver {
 
         hash = new HashMap<String, Boolean>(N * N);
         hash.put(initial.toString(), true);
-        PQ = new MinPQ<Board>(4);
+        PQ = new MinPQ<Board>(CMP);
         q = new Queue<Board>();
         q.enqueue(initial);
 
@@ -24,7 +49,7 @@ public class Solver {
         Board twin = initial.twin();
         twinHash = new HashMap<String, Boolean>(N * N);
         twinHash.put(twin.toString(), true);
-        twinPQ = new MinPQ<Board>(4);
+        twinPQ = new MinPQ<Board>(CMP);
 
         boolean solved = false;
 
