@@ -1,23 +1,78 @@
+import java.util.HashMap;
+
 public class Solver {
+    private HashMap<String, Boolean> hash, twinHash;
+    private MinPQ<Board> PQ, twinPQ;
+    private Queue<Board> q;
+
+    private boolean solvable = false;
 
     // find a solution to the initial board (using the A* algorithm)
     public Solver(Board initial) {
+        int N = initial.dimension();
+
+        hash = new HashMap<String, Boolean>(N * N);
+        hash.put(initial.toString(), true);
+        PQ = new MinPQ<Board>(4);
+        q = new Queue<Board>();
+        q.enqueue(initial);
+
+        if (initial.isGoal()) {
+          solvable = true;
+        }
+
+        Board twin = initial.twin();
+        twinHash = new HashMap<String, Boolean>(N * N);
+        twinHash.put(twin.toString(), true);
+        twinPQ = new MinPQ<Board>(4);
+
+        boolean solved = false;
+
+        while (!solved) {
+          for (Board board : initial.neighbors()) {
+              if (!hash.containsKey(board.toString())) {
+                  hash.put(board.toString(), true);
+                  PQ.insert(board);
+              }
+          }
+
+          initial = PQ.delMin();
+          q.enqueue(initial);
+          if (initial.isGoal()) {
+            solved = true;
+            solvable = true;
+          }
+
+          for (Board board : twin.neighbors()) {
+              if (!twinHash.containsKey(board.toString())) {
+                  twinHash.put(board.toString(), true);
+                  twinPQ.insert(board);
+              }
+          }
+
+          twin = twinPQ.delMin();
+          if (twin.isGoal()) {
+            solved = true;
+            solvable = false;
+          }
+
+        }
 
     }
 
     // is the initial board solvable?
     public boolean isSolvable() {
-
+      return solvable;
     }
 
     // min number of moves to solve initial board; -1 if unsolvable
     public int moves() {
-
+      return isSolvable() ? q.size() : -1;
     }
 
     // sequence of boards in a shortest solution; null if unsolvable
     public Iterable<Board> solution() {
-
+      return q;
     }
 
     // solve a slider puzzle (given below)
