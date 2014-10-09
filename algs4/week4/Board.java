@@ -9,9 +9,15 @@ public class Board {
 
     // construct a board from an N-by-N array of blocks
     // (where blocks[i][j] = block in row i, column j)
-    public Board(int[][] initialBlocks) {
-        N = initialBlocks[0].length;
-        this.blocks = initialBlocks;
+    public Board(int[][] source) {
+        N = source[0].length;
+        blocks = new int[N][N];
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                this.blocks[i][j] = source[i][j];
+            }
+        }
     }
 
     // exchange blocks and return new blocks array
