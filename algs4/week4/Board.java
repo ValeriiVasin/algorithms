@@ -6,7 +6,6 @@ public class Board {
 
     private int cachedHamming = -1;
     private int cachedManhattan = -1;
-    private String cacheToString = null;
 
     // construct a board from an N-by-N array of blocks
     // (where blocks[i][j] = block in row i, column j)
@@ -26,14 +25,14 @@ public class Board {
         return blocksCopy;
     }
 
-    private int[][] copy(int[][] blocks) {
-        int n = blocks[0].length;
+    private int[][] copy(int[][] source) {
+        int n = source[0].length;
         int[][] blocksCopy = new int[n][n];
 
         // copy incoming data
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                blocksCopy[i][j] = blocks[i][j];
+                blocksCopy[i][j] = source[i][j];
             }
         }
 
@@ -179,10 +178,6 @@ public class Board {
 
     // string representation of this board (in the output format specified below)
     public String toString() {
-        if (cacheToString != null) {
-            return cacheToString;
-        }
-
         StringBuilder s = new StringBuilder();
 
         s.append(N + "\n");
@@ -194,9 +189,9 @@ public class Board {
             s.append("\n");
         }
 
-        cacheToString = s.toString();
+        // cacheToString = s.toString();
 
-        return cacheToString;
+        return s.toString();
     }
 
     // unit tests (not graded)
