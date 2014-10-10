@@ -195,8 +195,6 @@ public class Board {
             s.append("\n");
         }
 
-        // cacheToString = s.toString();
-
         return s.toString();
     }
 
