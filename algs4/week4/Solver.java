@@ -44,6 +44,7 @@ public class Solver {
 
         if (initial.isGoal()) {
           solvable = true;
+          return;
         }
 
         Board twin = initial.twin();
