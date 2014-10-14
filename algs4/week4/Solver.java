@@ -3,26 +3,39 @@ import java.util.Comparator;
 
 public class Solver {
     private HashMap<String, Boolean> hash, twinHash;
-    private MinPQ<Board> PQ, twinPQ;
+    private MinPQ<BoardPriority> PQ, twinPQ;
     private Queue<Board> q;
 
-    // compare points by slope
-    private final Comparator<Board> CMP = new ManhattanComparator();
+    private class BoardPriority {
+      public Board board;
+      public int priority;
+      public int moves;
 
-    private class ManhattanComparator implements Comparator<Board> {
-        public int compare(Board a, Board b) {
+      public BoardPriority(Board board, int moves) {
+          priority = moves + board.manhattan();
+          this.moves = moves;
+          this.board = board;
+      }
+
+      public String toString() {
+        return "priority: " + priority + "; moves: " + moves + "\n";
+      }
+    }
+
+    // compare points by slope
+    private final Comparator<BoardPriority> CMP = new ManhattanComparator();
+
+    private class ManhattanComparator implements Comparator<BoardPriority> {
+        public int compare(BoardPriority a, BoardPriority b) {
             if (a == null || b == null) {
                 throw new NullPointerException();
             }
 
-            double manhattanA = a.manhattan();
-            double manhattanB = b.manhattan();
-
-            if (manhattanA == manhattanB) {
+            if (a.priority == b.priority) {
                 return 0;
             }
 
-            if (manhattanA > manhattanB) {
+            if (a.priority > b.priority) {
                 return 1;
             }
 
@@ -38,9 +51,10 @@ public class Solver {
 
         hash = new HashMap<String, Boolean>(N * N);
         hash.put(initial.toString(), true);
-        PQ = new MinPQ<Board>(CMP);
+        PQ = new MinPQ<BoardPriority>(CMP);
         q = new Queue<Board>();
         q.enqueue(initial);
+        int moves = 0;
 
         if (initial.isGoal()) {
           solvable = true;
@@ -50,16 +64,20 @@ public class Solver {
         Board twin = initial.twin();
         twinHash = new HashMap<String, Boolean>(N * N);
         twinHash.put(twin.toString(), true);
-        twinPQ = new MinPQ<Board>(CMP);
+        twinPQ = new MinPQ<BoardPriority>(CMP);
+        int twinMoves = 0;
 
         boolean solved = false;
 
         Board main = initial;
         while (!solved) {
+          moves += 1;
+          twinMoves += 1;
+
           for (Board board : main.neighbors()) {
               if (!hash.containsKey(board.toString())) {
                   hash.put(board.toString(), true);
-                  PQ.insert(board);
+                  PQ.insert(new BoardPriority(board, moves));
               }
           }
 
@@ -68,7 +86,11 @@ public class Solver {
             solved = true;
             solvable = false;
           } else {
-              main = PQ.delMin();
+              BoardPriority b = PQ.delMin();
+
+              StdOut.println(b);
+
+              main = b.board;
               q.enqueue(main);
 
               if (main.isGoal()) {
@@ -80,12 +102,12 @@ public class Solver {
           for (Board board : twin.neighbors()) {
               if (!twinHash.containsKey(board.toString())) {
                   twinHash.put(board.toString(), true);
-                  twinPQ.insert(board);
+                  twinPQ.insert(new BoardPriority(board, twinMoves));
               }
           }
 
           if (twinPQ.size() != 0) {
-              twin = twinPQ.delMin();
+              twin = twinPQ.delMin().board;
               if (twin.isGoal()) {
                   solved = true;
                   solvable = false;
