@@ -63,11 +63,18 @@ public class Solver {
               }
           }
 
-          main = PQ.delMin();
-          q.enqueue(main);
-          if (main.isGoal()) {
+          // nothing to check anymore
+          if (PQ.size() == 0) {
             solved = true;
-            solvable = true;
+            solvable = false;
+          } else {
+              main = PQ.delMin();
+              q.enqueue(main);
+
+              if (main.isGoal()) {
+                  solved = true;
+                  solvable = true;
+              }
           }
 
           for (Board board : twin.neighbors()) {
@@ -77,10 +84,12 @@ public class Solver {
               }
           }
 
-          twin = twinPQ.delMin();
-          if (twin.isGoal()) {
-            solved = true;
-            solvable = false;
+          if (twinPQ.size() != 0) {
+              twin = twinPQ.delMin();
+              if (twin.isGoal()) {
+                  solved = true;
+                  solvable = false;
+              }
           }
 
         }
@@ -89,7 +98,7 @@ public class Solver {
 
     // is the initial board solvable?
     public boolean isSolvable() {
-      return solvable;
+        return solvable;
     }
 
     // min number of moves to solve initial board; -1 if unsolvable
