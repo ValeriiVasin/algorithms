@@ -1,8 +1,4 @@
-import java.util.HashMap;
-import java.util.Comparator;
-
 public class Solver {
-    private HashMap<String, Boolean> hash, twinHash;
     private MinPQ<Step> PQ, twinPQ;
     private Stack<Board> stack;
 
@@ -34,27 +30,14 @@ public class Solver {
 
     // find a solution to the initial board (using the A* algorithm)
     public Solver(Board initial) {
-        int N = initial.dimension();
-
-        Board twin = initial.twin();
-
-        int moves = 0;
-
-        hash = new HashMap<String, Boolean>(N * N);
-        twinHash = new HashMap<String, Boolean>(N * N);
-
         PQ = new MinPQ<Step>();
         twinPQ = new MinPQ<Step>();
 
-        Step min, minTwin;
-
         PQ.insert(new Step(initial, 0, null));
-        twinPQ.insert(new Step(twin, 0, null));
-        hash.put(initial.toString(), true);
-        twinHash.put(twin.toString(), true);
+        twinPQ.insert(new Step(initial.twin(), 0, null));
 
-        min = PQ.delMin();
-        minTwin = twinPQ.delMin();
+        Step min = PQ.delMin();
+        Step minTwin = twinPQ.delMin();
 
         while (!min.board.isGoal() && !minTwin.board.isGoal()) {
 
