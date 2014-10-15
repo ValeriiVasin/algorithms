@@ -3,16 +3,28 @@ public class Solver {
     private Stack<Board> stack;
 
     private class Step implements Comparable<Step> {
-      public Board board;
-      public Step prevStep;
-      public int priority;
-      public int moves;
+      private Board board;
+      private Step prev;
+      private int priority;
+      private int moves;
 
       public Step(Board b, int m, Step s) {
           moves = m;
           board = b;
           priority = moves + board.manhattan();
-          prevStep = s;
+          prev = s;
+      }
+
+      public int getMoves() {
+        return moves;
+      }
+
+      public Step getPrev() {
+        return prev;
+      }
+
+      public Board getBoard() {
+        return board;
       }
 
       public int compareTo(Step that) {
@@ -39,22 +51,22 @@ public class Solver {
         Step min = PQ.delMin();
         Step minTwin = twinPQ.delMin();
 
-        while (!min.board.isGoal() && !minTwin.board.isGoal()) {
+        while (!min.getBoard().isGoal() && !minTwin.getBoard().isGoal()) {
 
-          for (Board board : min.board.neighbors()) {
-              if (min.prevStep != null && board.equals(min.prevStep.board)) {
+          for (Board board : min.getBoard().neighbors()) {
+              if (min.getPrev() != null && board.equals(min.getPrev().getBoard())) {
                   continue;
               }
 
-              PQ.insert(new Step(board, min.moves + 1, min));
+              PQ.insert(new Step(board, min.getMoves() + 1, min));
           }
 
-          for (Board board : minTwin.board.neighbors()) {
-              if (minTwin.prevStep != null && board.equals(minTwin.prevStep.board)) {
+          for (Board board : minTwin.getBoard().neighbors()) {
+              if (minTwin.getPrev() != null && board.equals(minTwin.getPrev().getBoard())) {
                   continue;
               }
 
-              twinPQ.insert(new Step(board, minTwin.moves + 1, minTwin));
+              twinPQ.insert(new Step(board, minTwin.getMoves() + 1, minTwin));
           }
 
           min     = PQ.delMin();
@@ -70,9 +82,9 @@ public class Solver {
         stack = new Stack<Board>();
 
         while (min != null) {
-            stack.push(min.board);
-            min = min.prevStep;
-        };
+            stack.push(min.getBoard());
+            min = min.getPrev();
+        }
     }
 
     // is the initial board solvable?
