@@ -58,20 +58,20 @@ public class Solver {
 
         while (!min.board.isGoal() && !minTwin.board.isGoal()) {
 
-          moves++;
-
           for (Board board : min.board.neighbors()) {
-              if (!hash.containsKey(board.toString())) {
-                  hash.put(board.toString(), true);
-                  PQ.insert(new Step(board, moves + 1, min));
+              if (min.prevStep != null && board.equals(min.prevStep.board)) {
+                  continue;
               }
+
+              PQ.insert(new Step(board, min.moves + 1, min));
           }
 
           for (Board board : minTwin.board.neighbors()) {
-              if (!twinHash.containsKey(board.toString())) {
-                  twinHash.put(board.toString(), true);
-                  twinPQ.insert(new Step(board, moves + 1, minTwin));
+              if (minTwin.prevStep != null && board.equals(minTwin.prevStep.board)) {
+                  continue;
               }
+
+              twinPQ.insert(new Step(board, minTwin.moves + 1, minTwin));
           }
 
           min     = PQ.delMin();
