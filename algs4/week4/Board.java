@@ -136,9 +136,21 @@ public class Board {
             return false;
         }
 
-        Board board = (Board) y;
+        Board that = (Board) y;
 
-        return this.toString().equals(board.toString());
+        if (this.dimension() != that.dimension()) {
+            return false;
+        }
+
+        for (int i = 0; i < this.dimension(); i++) {
+            for (int j = 0; j < this.dimension(); j++) {
+                if (this.blocks[i][j] != that.blocks[i][j]) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     // all neighboring boards
