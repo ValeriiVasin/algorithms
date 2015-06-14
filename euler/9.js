@@ -1,4 +1,6 @@
 var assert = require('assert');
+var arraySum = require('./util').arraySum;
+var arrayProduct = require('./util').arrayProduct;
 
 function pythagoreanTriplet(_sum) {
   var squares = squaresLessThenOrEqual(_sum * _sum);
@@ -9,22 +11,10 @@ function pythagoreanTriplet(_sum) {
       return triplet.map(Math.sqrt);
     })
     .filter(function(triplet) {
-      return sum(triplet) === _sum;
+      return arraySum(triplet) === _sum;
     });
 
   return triplets[0];
-}
-
-function sum(arr) {
-  return arr.reduce(function(a, b) {
-    return a + b;
-  });
-}
-
-function product(arr) {
-  return arr.reduce(function(a, b) {
-    return a * b;
-  });
 }
 
 function squaresLessThenOrEqual(number) {
@@ -71,7 +61,7 @@ assert.deepEqual(squaresLessThenOrEqual(25), [1, 4, 9, 16, 25], 'squaresLessThen
 assert.deepEqual(getPythagoreanTriplets([1, 4, 9, 16, 25]), [[9, 16, 25]], 'getTriplets');
 assert.deepEqual(toHash([2, 3]), { 2: true, 3: true }, 'toHash');
 
-assert.equal(product(
+assert.equal(arrayProduct(
   pythagoreanTriplet(1000)
 ), 31875000, 'Answer');
 
