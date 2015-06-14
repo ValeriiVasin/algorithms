@@ -10,7 +10,7 @@ function getPrimes(n) {
   }
 
   for (i = 2; i * i <= n; i += 1) {
-    if ( !primes[i] ) {
+    if (!primes[i]) {
       continue;
     }
 
@@ -23,6 +23,26 @@ function getPrimes(n) {
   return primes.filter(Boolean);
 }
 
-console.log(
-  getPrimes(100)
-);
+// https://en.wikipedia.org/wiki/Primality_test
+function isPrime(n) {
+  if (n <= 3) {
+    return n > 1;
+  }
+
+  if (n % 2 === 0 || n % 3 === 0) {
+    return false;
+  }
+
+  for (var i = 5; i * i <= n; i += 6) {
+    if (n % i === 0 || n % (i + 2) === 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+module.exports = {
+  getPrimes: getPrimes,
+  isPrime: isPrime
+}
