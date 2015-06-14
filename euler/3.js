@@ -30,3 +30,7 @@ function nextPrime(n) {
 console.log(
   getPrimeFactors(number)
 );
+
+module.exports = {
+  nextPrime: nextPrime
+};
