@@ -42,7 +42,16 @@ function isPrime(n) {
   return true;
 }
 
+function nextPrime(n) {
+  do {
+    n++;
+  } while (!isPrime(n));
+
+  return n;
+}
+
 module.exports = {
   getPrimes: getPrimes,
-  isPrime: isPrime
+  isPrime: isPrime,
+  nextPrime: nextPrime
 }

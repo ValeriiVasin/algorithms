@@ -1,4 +1,5 @@
-var nextPrime = require('./3').nextPrime;
+var assert = require('assert');
+var nextPrime = require('../problems/primes').nextPrime;
 
 function nthPrime(n) {
   if (n === 1) {
@@ -13,6 +14,4 @@ function nthPrime(n) {
   return prime;
 }
 
-console.log(
-  nthPrime(10001)
-);
+assert.equal(nthPrime(10001), 104743, 'Answer');

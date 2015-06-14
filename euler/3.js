@@ -1,4 +1,7 @@
+var assert = require('assert');
+
 var isPrime = require('../problems/primes').isPrime;
+var nextPrime = require('../problems/primes').nextPrime;
 
 var number = 600851475143;
 
@@ -18,19 +21,4 @@ function getPrimeFactors(number) {
   return primeFactors;
 }
 
-function nextPrime(n) {
-  do {
-    n++;
-  } while (!isPrime(n));
-
-  return n;
-}
-
-
-console.log(
-  getPrimeFactors(number)
-);
-
-module.exports = {
-  nextPrime: nextPrime
-};
+assert.equal(getPrimeFactors(number).pop(), 6857, 'Answer');

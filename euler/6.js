@@ -20,6 +20,4 @@ assert.equal(sumOfSquares(10), 385, 'Example: sumOfSquares');
 assert.equal(squareOfSum(10), 3025, 'Example: squareOfSum');
 assert.equal(sumDifference(10), 2640, 'Example');
 
-console.log(
-  sumDifference(100)
-);
+assert.equal(sumDifference(100), 25164150, 'Answer');

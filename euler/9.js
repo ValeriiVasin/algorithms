@@ -71,9 +71,7 @@ assert.deepEqual(squaresLessThenOrEqual(25), [1, 4, 9, 16, 25], 'squaresLessThen
 assert.deepEqual(getPythagoreanTriplets([1, 4, 9, 16, 25]), [[9, 16, 25]], 'getTriplets');
 assert.deepEqual(toHash([2, 3]), { 2: true, 3: true }, 'toHash');
 
-console.log(
-  product(
-    pythagoreanTriplet(1000)
-  )
-);
+assert.equal(product(
+  pythagoreanTriplet(1000)
+), 31875000, 'Answer');
 

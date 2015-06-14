@@ -1,3 +1,5 @@
+var assert = require('assert');
+
 var number = 999 * 999;
 
 function isPalindrome(number) {
@@ -55,7 +57,5 @@ function getLargestPalindromeNonOptimal() {
   return palindrome;
 }
 
-console.log(
-  getLargestPalindrome(9801),
-  getLargestPalindromeNonOptimal()
-)
+assert.equal(getLargestPalindrome(), 906609, 'Answer');
+assert.equal(getLargestPalindromeNonOptimal(), 906609, 'Answer');

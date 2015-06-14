@@ -1,3 +1,4 @@
+var assert = require('assert');
 var getPrimes = require('../problems/primes').getPrimes;
 
 function getSmallestEvenlyDevisibleTo(n) {
@@ -36,7 +37,4 @@ function isDevisibleByAll(number, devisors) {
   });
 }
 
-console.time('time');
-var result = getSmallestEvenlyDevisibleTo(20);
-console.timeEnd('time');
-console.log(result);
+assert.equal(getSmallestEvenlyDevisibleTo(20), 232792560, 'Answer');

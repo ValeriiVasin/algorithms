@@ -59,3 +59,5 @@ assert.equal(sequenceProduct('9989', 4), 5832, 'Example product');
 var sequence = greatestAdjacentSequence(numberStr, 13);
 var product = sequenceProduct(sequence);
 console.log('Sequence: %s\nProduct: %d', sequence, product);
+
+assert.equal(product, 23514624000, 'Answer');
