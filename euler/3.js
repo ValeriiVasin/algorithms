@@ -22,3 +22,7 @@ function getPrimeFactors(number) {
 }
 
 assert.equal(getPrimeFactors(number).pop(), 6857, 'Answer');
+
+module.exports = {
+  getPrimeFactors: getPrimeFactors
+};
