@@ -21,12 +21,34 @@ function go(x, y, n) {
   return go[cacheKey];
 }
 
+function factorial(n) {
+  if (n === 1) {
+    return 1;
+  }
+
+  if (!factorial[n]) {
+    factorial[n] = n * factorial(n - 1);
+  }
+
+  return factorial[n];
+}
+
+function combinations(n, k) {
+  return (factorial(n) / factorial(k)) / factorial(n - k);
+}
+
+/**
+ * Combinatorial solution
+ * Notice: not working for n > 85 (need big num)
+ *
+ * http://articles.leetcode.com/2010/11/unique-paths.html
+ */
+function getUniqPathsCombinatorial(n) {
+  return combinations(2 * n, n);
+}
+
 assert.equal(go(0, 0, 2), 6);
 assert.equal(go(0, 0, 5), 252);
 assert.equal(go(0, 0, 10), 184756);
 assert.equal(go(0, 0, 15), 155117520);
-assert.equal(go(0, 0, 20), 137846528820);
-
-console.time('time');
-console.log(go(0, 0, 20));
-console.timeEnd('time');
+assert.equal(go(0, 0, 20), 137846528820, 'Answer');
