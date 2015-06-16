@@ -1,7 +1,5 @@
 var assert = require('assert');
 
-var number = 999 * 999;
-
 function isPalindrome(number) {
   var stringified = String(number);
   var reversed = stringified.split('').reverse().join('');

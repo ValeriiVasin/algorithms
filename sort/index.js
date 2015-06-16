@@ -10,7 +10,7 @@ var heapSort = require('./heap');
 var shellSort = require('./shell');
 
 function run(label, sortFn) {
-  var data = [].concat( arr );
+  var data = [].concat(arr);
   var result;
 
   console.time(label);

@@ -54,4 +54,4 @@ module.exports = {
   getPrimes: getPrimes,
   isPrime: isPrime,
   nextPrime: nextPrime
-}
+};

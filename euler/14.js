@@ -9,12 +9,11 @@ function sequenceLength(number) {
     return 1;
   }
 
-  var cached = sequenceLength[number];
-  if (cached) {
-    return cached;
+  if (!sequenceLength[number]) {
+    sequenceLength[number] = sequenceLength(nextSequenceNumber(number)) + 1;
   }
 
-  return sequenceLength[number] = sequenceLength(nextSequenceNumber(number)) + 1;
+  return sequenceLength[number];
 }
 
 function getMaxSequence(n) {

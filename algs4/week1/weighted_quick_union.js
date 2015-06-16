@@ -8,24 +8,24 @@ function WeightedQuickUnion(n) {
   }
 }
 
-WeightedQuickUnion.prototype._root = function (id) {
-  while ( this.id[id] !== id ) {
+WeightedQuickUnion.prototype._root = function(id) {
+  while (this.id[id] !== id) {
     id = this.id[id];
   }
 
   return id;
 };
 
-WeightedQuickUnion.prototype.union = function (p, q) {
+WeightedQuickUnion.prototype.union = function(p, q) {
   var rootP = this._root(p);
   var rootQ = this._root(q);
 
   // connected
-  if ( rootP === rootQ ) {
+  if (rootP === rootQ) {
     return;
   }
 
-  if ( this.size[rootP] < this.size[rootQ] ) {
+  if (this.size[rootP] < this.size[rootQ]) {
     this.id[ rootP ] = rootQ;
     this.size[ rootQ ] += this.size[rootP];
   } else {
@@ -34,7 +34,7 @@ WeightedQuickUnion.prototype.union = function (p, q) {
   }
 };
 
-WeightedQuickUnion.prototype.connected = function (p, q) {
+WeightedQuickUnion.prototype.connected = function(p, q) {
   return this._root(p) === this._root(q);
 };
 

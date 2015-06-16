@@ -1,6 +1,6 @@
 function gcd(a, b) {
-  while ( a > 0 && b > 0 ) {
-    if ( a > b ) {
+  while (a > 0 && b > 0) {
+    if (a > b) {
       a %= b;
     } else {
       b %= a;
@@ -10,4 +10,6 @@ function gcd(a, b) {
   return a > b ? a : b;
 }
 
-console.log( gcd(19, 90) );
+console.log(
+  gcd(19, 90)
+);

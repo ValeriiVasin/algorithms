@@ -8,7 +8,7 @@ function sort(arr, comparator) {
     return arr;
   }
 
-  var middle = Math.floor( length / 2 );
+  var middle = Math.floor(length / 2);
 
   return merge(
     sort(arr.slice(0, middle), comparator),
@@ -26,14 +26,14 @@ function merge(leftArr, rightArr, comparator) {
   var j = 0;
   var compare;
 
-  while ( i < leftLength || j < rightLength ) {
-    if ( i < leftLength && j < rightLength ) {
+  while (i < leftLength || j < rightLength) {
+    if (i < leftLength && j < rightLength) {
       compare = comparator(leftArr[i], rightArr[j]);
 
-      if ( compare < 0 ) {
+      if (compare < 0) {
         result.push(leftArr[i]);
         i += 1;
-      } else if ( compare > 0 ) {
+      } else if (compare > 0) {
         result.push(rightArr[j]);
         j += 1;
       } else {
@@ -41,7 +41,7 @@ function merge(leftArr, rightArr, comparator) {
         i += 1;
         j += 1;
       }
-    } else if ( i < leftLength ) {
+    } else if (i < leftLength) {
       result.push(leftArr[i]);
       i += 1;
     } else {

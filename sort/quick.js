@@ -2,6 +2,7 @@
  * http://en.wikipedia.org/wiki/Quicksort
  */
 
+/*eslint-disable no-unused-vars*/
 var swap = require('./common').swap;
 
 function sort(arr) {
@@ -9,7 +10,7 @@ function sort(arr) {
 }
 
 function quicksort(arr, left, right) {
-  if ( left >= right ) {
+  if (left >= right) {
     return;
   }
 
@@ -31,7 +32,7 @@ function partition(arr, left, right) {
 
   var storeIndex = left;
   for (i = left; i < right; i += 1) {
-    if ( arr[i] < pivotValue ) {
+    if (arr[i] < pivotValue) {
 
       // if element is less then pivot - swap it with storeIndex element,
       // which is greater
@@ -58,14 +59,14 @@ function select(arr, n) {
   var right = arr.length - 1;
   var index;
 
-  while ( index !== n && left <= right ) {
+  while (index !== n && left <= right) {
     index = partition(arr, left, right);
 
-    if ( index < n ) {
+    if (index < n) {
       left = index + 1;
     }
 
-    if ( index > n ) {
+    if (index > n) {
       right = index - 1;
     }
   }
@@ -80,7 +81,7 @@ function select(arr, n) {
  * @return {Number} Random number
  */
 function random(start, end) {
-  return start + Math.round( Math.random() * (end - start) );
+  return start + Math.round(Math.random() * (end - start));
 }
 
 module.exports = sort;

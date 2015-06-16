@@ -10,7 +10,7 @@ function sort(arr, callback) {
   for (i = 1; i < length; i += 1) {
     j = i;
     value = arr[i];
-    while ( j >= 0 && value < arr[j - 1] ) {
+    while (j >= 0 && value < arr[j - 1]) {
       arr[j] = arr[j - 1];
       j -= 1;
     }

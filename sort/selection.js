@@ -13,7 +13,7 @@ function sort(arr, callback) {
     minValue = arr[minIndex];
 
     for (j = i + 1; j < length; j += 1) {
-      if ( arr[j] < minValue ) {
+      if (arr[j] < minValue) {
         minValue = arr[j];
         minIndex = j;
       }

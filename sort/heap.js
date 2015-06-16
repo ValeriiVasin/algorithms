@@ -24,9 +24,9 @@ function sort(arr) {
 function heapify(arr) {
   var lastChild = arr.length - 1;
   // last parent element
-  var start = Math.floor( (lastChild - 1) / 2 );
+  var start = Math.floor((lastChild - 1) / 2);
 
-  while ( start >= 0 ) {
+  while (start >= 0) {
     siftDown(arr, start, lastChild);
     start -= 1;
   }
@@ -47,19 +47,19 @@ function siftDown(arr, start, end) {
     nextRoot = root;
     leftChildIndex = root * 2 + 1;
 
-    if ( arr[leftChildIndex] > arr[nextRoot] ) {
+    if (arr[leftChildIndex] > arr[nextRoot]) {
       nextRoot = leftChildIndex;
     }
 
     rightChildIndex = leftChildIndex + 1;
-    if ( rightChildIndex <= end ) {
-      if ( arr[rightChildIndex] > arr[nextRoot] ) {
+    if (rightChildIndex <= end) {
+      if (arr[rightChildIndex] > arr[nextRoot]) {
         nextRoot = rightChildIndex;
       }
     }
 
     // nothing to change
-    if ( root === nextRoot ) {
+    if (root === nextRoot) {
       return;
     } else {
       swap(arr, root, nextRoot);

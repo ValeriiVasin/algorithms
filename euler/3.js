@@ -1,6 +1,5 @@
 var assert = require('assert');
 
-var isPrime = require('../problems/primes').isPrime;
 var nextPrime = require('../problems/primes').nextPrime;
 
 var number = 600851475143;

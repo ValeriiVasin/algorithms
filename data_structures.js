@@ -5,12 +5,12 @@ function Stack() {
   this._root = null;
 }
 
-Stack.prototype.isEmpty = function () {
+Stack.prototype.isEmpty = function() {
   return this._root === null;
 };
 
-Stack.prototype.pop = function () {
-  if ( this.isEmpty() ) {
+Stack.prototype.pop = function() {
+  if (this.isEmpty()) {
     return null;
   }
 
@@ -19,7 +19,7 @@ Stack.prototype.pop = function () {
   return item.value;
 };
 
-Stack.prototype.push = function (value) {
+Stack.prototype.push = function(value) {
   this._root = {
     value: value,
     next: this._root
@@ -28,14 +28,14 @@ Stack.prototype.push = function (value) {
   return this;
 };
 
-Stack.prototype.forEach = function (callback) {
-  if ( this.isEmpty() ) {
+Stack.prototype.forEach = function(callback) {
+  if (this.isEmpty()) {
     return;
   }
 
   var item = this._root;
 
-  while ( item !== null ) {
+  while (item !== null) {
     callback(item.value);
     item = item.next;
   }
@@ -55,7 +55,7 @@ Queue.prototype.enqueue = function (value) {
     next: null
   };
 
-  if ( this.isEmpty() ) {
+  if (this.isEmpty()) {
     this._root = this._last = item;
   } else {
     this._last.next = item;
@@ -65,22 +65,22 @@ Queue.prototype.enqueue = function (value) {
   return this;
 };
 
-Queue.prototype.dequeue = function () {
-  if ( this.isEmpty() ) {
+Queue.prototype.dequeue = function() {
+  if (this.isEmpty()) {
     return null;
   }
 
   var item = this._root;
   this._root = item.next;
 
-  if ( this.isEmpty() ) {
+  if (this.isEmpty()) {
     this._last = null;
   }
 
   return item.value;
 };
 
-Queue.prototype.isEmpty = function () {
+Queue.prototype.isEmpty = function() {
   return this._root === null;
 };
 

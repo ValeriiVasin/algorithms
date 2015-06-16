@@ -6,27 +6,27 @@ function QuickUnion(n) {
   }
 }
 
-QuickUnion.prototype._root = function (id) {
-  while ( this.id[id] !== id ) {
+QuickUnion.prototype._root = function(id) {
+  while (this.id[id] !== id) {
     id = this.id[id];
   }
 
   return id;
 };
 
-QuickUnion.prototype.union = function (p, q) {
+QuickUnion.prototype.union = function(p, q) {
   var rootP = this._root(p);
   var rootQ = this._root(q);
 
   // connected
-  if ( rootP === rootQ ) {
+  if (rootP === rootQ) {
     return;
   }
 
   this.id[ rootP ] = rootQ;
 };
 
-QuickUnion.prototype.connected = function (p, q) {
+QuickUnion.prototype.connected = function(p, q) {
   return this._root(p) === this._root(q);
 };
 

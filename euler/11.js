@@ -1,6 +1,5 @@
 var assert = require('assert');
 var arrayProduct = require('./util').arrayProduct;
-var length = 20;
 
 var initial = [
   '08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08',
@@ -133,9 +132,11 @@ function rotateCW(arr) {
   var length = arr.length;
 
   for (var i = length - 1; i >= 0; i--) {
+    /*eslint-disable no-loop-func*/
     arr[i].forEach(function(value, index) {
       result[index][length - i - 1] = value;
     });
+    /*eslint-enable no-loop-funct*/
   }
 
   return result;

@@ -1,7 +1,9 @@
+/*eslint-disable no-unused-vars*/
+
 function sort(arr, callback) {
   var length = arr.length;
 
-  getGaps3xPlusOne(length).forEach(function (gap) {
+  getGaps3xPlusOne(length).forEach(function(gap) {
 
     for (var i = gap; i < length; i += 1) {
       var value = arr[i];
@@ -31,7 +33,7 @@ function sort(arr, callback) {
 function getGaps3xPlusOne(n) {
   var gaps = [1];
 
-  while ( 3 * gaps[gaps.length - 1] + 1 < n ) {
+  while (3 * gaps[gaps.length - 1] + 1 < n) {
     gaps.push(3 * gaps[gaps.length - 1] + 1);
   }
 
@@ -46,13 +48,13 @@ function getGaps3xPlusOne(n) {
  */
 function getGaps(n) {
   var results = [];
-  var limit = Math.floor( n / 3 );
+  var limit = Math.floor(n / 3);
   var k = 1;
   var gap;
 
   do {
     gap = (Math.pow(3, k) - 1) / 2;
-    results.unshift( gap );
+    results.unshift(gap);
     k += 1;
   } while (gap < limit);
 

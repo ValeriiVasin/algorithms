@@ -19,10 +19,10 @@ var dictionary = {
 };
 
 var rowsCount = 8;
-var rows = words.reduce(function (result, word, index) {
+var rows = words.reduce(function(result, word, index) {
   var row = index % rowsCount;
 
-  if ( !result[row] ) {
+  if (!result[row]) {
     result[row] = [];
   }
 
@@ -30,12 +30,13 @@ var rows = words.reduce(function (result, word, index) {
 
   return result;
 }, []);
+var __results = {};
 
 function toHash(arr) {
   return arr.join(';');
 }
 
-var _byHash = rows.reduce(function (result, row, index) {
+var _byHash = rows.reduce(function(result, row, index) {
   result[toHash(row)] = index;
   return result;
 }, {});
@@ -44,15 +45,14 @@ function stepCallback(sortType, arr) {
   var hash = toHash(arr);
   var result = _byHash[hash];
 
-  if ( typeof result !== 'undefined' ) {
-    if ( !__results[sortType] ) {
+  if (typeof result !== 'undefined') {
+    if (!__results[sortType]) {
       __results[sortType] = [];
     }
     __results[sortType].push(result);
   }
 }
 
-var __results = {};
 function doSort(sort, type) {
   var arr = rows[0].slice(0);
 
@@ -69,10 +69,10 @@ doSort(shell, 'shell');
  * 2 - insertion
  * ...
  */
-var mapping = Object.keys(__results).reduce(function (mapping, sortType) {
+var mapping = Object.keys(__results).reduce(function(mapping, sortType) {
   var results = __results[sortType];
 
-  results.forEach(function (order) {
+  results.forEach(function(order) {
     mapping[order] = sortType;
   });
 
@@ -83,7 +83,7 @@ var mapping = Object.keys(__results).reduce(function (mapping, sortType) {
 delete mapping[7];
 
 // Print answers
-Object.keys(mapping).sort().forEach(function (key) {
+Object.keys(mapping).sort().forEach(function(key) {
   console.log(
     'Order: %s; Sort type: [%s] %s',
     key,

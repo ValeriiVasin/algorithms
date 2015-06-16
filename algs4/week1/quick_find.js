@@ -6,8 +6,8 @@ function QuickFind(n) {
   }
 }
 
-QuickFind.prototype.union = function (p, q) {
-  if ( this.connected(p, q) ) {
+QuickFind.prototype.union = function(p, q) {
+  if (this.connected(p, q)) {
     return;
   }
 
@@ -15,8 +15,8 @@ QuickFind.prototype.union = function (p, q) {
   var pid = this.id[p];
 
   // replace all pid with qid
-  this.id = this.id.map(function (id) {
-    if ( id === pid ) {
+  this.id = this.id.map(function(id) {
+    if (id === pid) {
       return qid;
     }
 
@@ -24,7 +24,7 @@ QuickFind.prototype.union = function (p, q) {
   });
 };
 
-QuickFind.prototype.connected = function (p, q) {
+QuickFind.prototype.connected = function(p, q) {
   return this.id[p] === this.id[q];
 };
 
