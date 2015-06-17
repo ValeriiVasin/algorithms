@@ -16,57 +16,29 @@ var fixtureNumbers = [
   [8, 5, 9, 3]
 ];
 
-function getSum(arr, i, j, cache) {
-  var value = arr[i][j];
-
-  if (i === 0 && j === 0) {
-    return value;
-  }
-
-  cache = cache || {};
-  var cacheKey = i + ':' + j;
-  if (getSum[cacheKey]) {
-    return getSum[cacheKey];
-  }
-
-  // i-th row length
-  var length = i + 1;
-
-  // first
-  if (j === 0) {
-    cache[cacheKey] = value + getSum(arr, i - 1, 0, cache);
-    return cache[cacheKey];
-  }
-
-  // last
-  if (j === length - 1) {
-    cache[cacheKey] = value + getSum(arr, i - 1, i - 1, cache);
-    return cache[cacheKey];
-  }
-
-  // max parents sum
-  cache[cacheKey] = value + Math.max(
-    getSum(arr, i - 1, j - 1, cache),
-    getSum(arr, i - 1, j, cache)
-  );
-
-  return cache[cacheKey];
-}
-
+/**
+ * 1) Go from bottom to the top and select max between children
+ * 2) Add value to max from children and save it
+ * 3) Continue until root is reached
+ */
 function maxSequenceSum(arr) {
-  var i = arr.length - 1;
-  var cache = {};
-  var sums = arr[i].map(function(value, index) {
-    return getSum(arr, i, index, cache);
-  });
+  arr = arr.slice();
+  var length = arr.length;
 
-  return Math.max.apply(Math, sums);
+  for (var i = length - 2; i >= 0; i--) {
+    /*eslint-disable no-loop-func*/
+    arr[i] = arr[i].map(function(value, j) {
+      return value + Math.max(
+        arr[i + 1][j],
+        arr[i + 1][j + 1]
+      );
+    });
+    /*eslint-enable no-loop-func*/
+  }
+
+  return arr[0][0];
 }
 
-assert.equal(getSum(fixtureNumbers, 0, 0), 3);
-assert.equal(getSum(fixtureNumbers, 1, 0), 10);
-assert.equal(getSum(fixtureNumbers, 1, 1), 7);
-assert.equal(getSum(fixtureNumbers, 2, 0), 12);
 assert.equal(maxSequenceSum(fixtureNumbers), 23);
 assert.equal(maxSequenceSum(numbers), 1074, 'Answer');
 
