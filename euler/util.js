@@ -1,3 +1,6 @@
+var fs = require('fs');
+var path = require('path');
+
 function arraySum(arr) {
   return arr.reduce(function(a, b) {
     return a + b;
@@ -65,6 +68,13 @@ function _normalize(arr) {
   return arr;
 }
 
+function readFixture(filename) {
+  return fs.readFileSync(
+    path.resolve(__dirname, 'fixtures/' + filename),
+    { encoding: 'utf8' }
+  );
+}
+
 module.exports = {
   arraySum: arraySum,
   arrayProduct: arrayProduct,
@@ -72,5 +82,7 @@ module.exports = {
   factorial: factorial,
   combinations: combinations,
 
-  multiply: multiply
+  multiply: multiply,
+
+  readFixture: readFixture
 };
