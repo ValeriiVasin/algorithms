@@ -49,7 +49,7 @@ function Queue() {
   this._last = null;
 }
 
-Queue.prototype.enqueue = function (value) {
+Queue.prototype.enqueue = function(value) {
   var item = {
     value: value,
     next: null
