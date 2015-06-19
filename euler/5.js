@@ -1,8 +1,8 @@
 var assert = require('assert');
 var getPrimes = require('../problems/primes').getPrimes;
 
-function getSmallestEvenlyDevisibleTo(n) {
-  // its enough to be devisible to primes
+function getSmallestEvenlyDivisibleTo(n) {
+  // its enough to be divisible to primes
   var primes = getPrimes(n);
   var notPrimes = getNotPrimes(n, primes);
 
@@ -12,7 +12,7 @@ function getSmallestEvenlyDevisibleTo(n) {
   });
 
   var number = step;
-  while (!isDevisibleByAll(number, notPrimes)) {
+  while (!isDivisibleByAll(number, notPrimes)) {
     number += step;
   }
 
@@ -31,10 +31,10 @@ function getNotPrimes(n, primes) {
   return notPrimes;
 }
 
-function isDevisibleByAll(number, devisors) {
-  return devisors.every(function(devisor) {
-    return number % devisor === 0;
+function isDivisibleByAll(number, divisors) {
+  return divisors.every(function(divisor) {
+    return number % divisor === 0;
   });
 }
 
-assert.equal(getSmallestEvenlyDevisibleTo(20), 232792560, 'Answer');
+assert.equal(getSmallestEvenlyDivisibleTo(20), 232792560, 'Answer');
