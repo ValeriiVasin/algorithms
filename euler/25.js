@@ -18,4 +18,4 @@ function firstContainsAmountOfDigits(n) {
 }
 
 assert.equal(firstContainsAmountOfDigits(3), 12);
-assert.equal(firstContainsAmountOfDigits(1000), 4782);
+assert.equal(firstContainsAmountOfDigits(1000), 4782, 'Answer');

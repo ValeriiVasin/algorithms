@@ -49,5 +49,9 @@ function sumOfAmicables(max) {
 
 assert.equal(sumOfDivisors(220), 284);
 assert.equal(sumOfDivisors(284), 220);
-
 assert.equal(sumOfAmicables(10000), 31626, 'Answer');
+
+module.exports = {
+  getDivisors: getDivisors,
+  sumOfDivisors: sumOfDivisors
+};
