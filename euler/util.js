@@ -75,12 +75,29 @@ function readFixture(filename) {
   );
 }
 
+function fibonacci(n) {
+  if (n === 1) {
+    return 1;
+  }
+
+  if (n === 2) {
+    return 1;
+  }
+
+  if (!fibonacci[n]) {
+    fibonacci[n] = fibonacci(n - 1) + fibonacci(n - 2);
+  }
+
+  return fibonacci[n];
+}
+
 module.exports = {
   arraySum: arraySum,
   arrayProduct: arrayProduct,
 
   factorial: factorial,
   combinations: combinations,
+  fibonacci: fibonacci,
 
   multiply: multiply,
 
