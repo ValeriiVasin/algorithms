@@ -84,4 +84,7 @@ function random(start, end) {
   return start + Math.round(Math.random() * (end - start));
 }
 
-module.exports = sort;
+module.exports = {
+  sort: sort,
+  select: select
+};
