@@ -1,15 +1,4 @@
-#!/usr/bin/env node
-
-// https://www.hackerrank.com/challenges/simple-array-sum
-
-function solve(lines) {
-  var count = Number(lines[0]);
-  var numbers = lines[1].split(' ').map(Number);
-
-  var result = numbers.slice(0, count).reduce(function(a, b) { return a + b; });
-
-  console.log(result);
-}
+// var process = global.process;
 
 function read() {
   process.stdin.resume();
@@ -36,4 +25,7 @@ function readLines() {
   });
 }
 
-readLines().then(solve);
+module.exports = {
+  read: read,
+  readLines: readLines
+};
