@@ -12,7 +12,8 @@ module.exports = {
   entry: getEntries(),
   output: {
     path: require('path').resolve('./build'),
-    filename: '[name].js'
+    filename: '[name].js',
+    libraryTarget: 'commonjs2'
   },
   module: {
     loaders: [
