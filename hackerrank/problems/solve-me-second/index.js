@@ -2,16 +2,16 @@
 
 'use strict';
 
-import { readLines } from '../../lib/read';
+import { read } from '../../lib/read';
 
-const solve = (lines) => {
-  let n = Number(lines[0].trim());
+const solve = (reader) => {
+  let n = reader.readNumber();
 
-  for (let line of lines.slice(1)) {
-    let numbers = line.trim().split(' ').map(Number);
+  for (let i = 0; i < n; i += 1) {
+    let numbers = reader.readNumbers();
 
-    console.log(numbers[0] + numbers[1]);
+    console.log(numbers.reduce((a, b) => a + b));
   }
 };
 
-readLines().then(solve);
+read().then(solve);

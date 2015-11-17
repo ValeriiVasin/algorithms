@@ -1,6 +1,6 @@
 // https://www.hackerrank.com/challenges/plus-minus
 
-import { readLines } from '../../lib/read';
+import { read } from '../../lib/read';
 
 const getFractions = (array, precision) => {
   const length = array.length;
@@ -27,9 +27,9 @@ const getFractions = (array, precision) => {
   };
 };
 
-const solve = (lines) => {
-  let n = Number(lines[0]);
-  let numbers = lines[1].split(' ').map(Number).slice(0, n);
+const solve = (reader) => {
+  let n = reader.readNumber();
+  let numbers = reader.readNumbers(n);
 
   let fractions = getFractions(numbers, 3);
 
@@ -38,4 +38,4 @@ const solve = (lines) => {
   console.log(fractions.zero);
 };
 
-readLines().then(solve);
+read().then(solve);

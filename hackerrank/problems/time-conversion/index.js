@@ -2,7 +2,7 @@
 
 'use strict';
 
-import { readLines } from '../../lib/read';
+import { read } from '../../lib/read';
 
 export const convertTime = (input) => {
   return input.replace(/(\d{2}):(\d{2}):(\d{2})(\w{2})/, replacer);
@@ -21,10 +21,10 @@ const replacer = (match, hours, minutes, seconds, pmam) => {
   return `${hours}:${minutes}:${seconds}`;
 };
 
-const solve = (lines) => {
-  for (let line of lines) {
+const solve = (reader) => {
+  for (let line of reader.readLines()) {
     console.log(convertTime(line));
   }
 };
 
-readLines().then(solve);
+read().then(solve);

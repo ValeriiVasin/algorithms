@@ -2,11 +2,11 @@
 
 'use strict'
 
-import { readLines } from '../../lib/read';
+import { read } from '../../lib/read';
 
-function solve(lines) {
-  const n = Number(lines[0]);
-  const numbers = lines[1].split(' ').map(Number);
+function solve(reader) {
+  const n = reader.readNumber();
+  const numbers = reader.readNumbers();
 
   console.log(sum(n, numbers));
 }
@@ -15,4 +15,4 @@ export const sum = (n, numbers) => {
   return numbers.slice(0, n).reduce((a, b) => a + b);
 };
 
-readLines().then(solve);
+read().then(solve);

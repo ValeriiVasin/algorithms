@@ -1,27 +1,22 @@
 // https://www.hackerrank.com/challenges/the-grid-search
 
-import { readLines } from '../../lib/read';
+import { read } from '../../lib/read';
 
-const solve = (lines) => {
-  let n = Number(lines.shift().trim());
+const solve = (reader) => {
+  let n = reader.readNumber();
 
-  for (let i = 0; i < n; i++) {
-    let grid = readGrid(lines);
-    let pattern = readGrid(lines);
+  for (let i = 0; i < n; i += 1) {
+    let grid = readGrid(reader);
+    let pattern = readGrid(reader);
 
-    console.log(hasPattern(grid.grid, pattern.grid) ? 'YES' : 'NO');
+    console.log(hasPattern(grid, pattern) ? 'YES' : 'NO');
   }
 }
 
-const readGrid = (lines) => {
-  let [rows, columns] = lines.shift().trim().split(' ').map(Number);
-  let grid = [];
+const readGrid = (reader) => {
+  let [rows, columns] = reader.readNumbers();
 
-  for (let i = 0; i < rows; i++) {
-    grid.push(lines.shift());
-  }
-
-  return { rows, columns, grid };
+  return reader.readLines(rows);
 };
 
 export const hasPattern = (grid, pattern) => {
@@ -56,4 +51,4 @@ export const isPattern = (grid, pattern, rowStart, colStart) => {
   return true;
 };
 
-readLines().then(solve);
+read().then(solve);
