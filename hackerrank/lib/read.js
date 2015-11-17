@@ -1,5 +1,3 @@
-// var process = global.process;
-
 function read() {
   process.stdin.resume();
   process.stdin.setEncoding("ascii");
