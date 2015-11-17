@@ -1,6 +1,6 @@
-// https://www.hackerrank.com/challenges/time-conversion
-
 'use strict';
+
+// https://www.hackerrank.com/challenges/time-conversion
 
 import { read } from '../../lib/read';
 

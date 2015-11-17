@@ -1,6 +1,6 @@
-// https://www.hackerrank.com/challenges/solve-me-second
-
 'use strict';
+
+// https://www.hackerrank.com/challenges/solve-me-second
 
 import { read } from '../../lib/read';
 

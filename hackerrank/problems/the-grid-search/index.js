@@ -1,3 +1,5 @@
+'use strict';
+
 // https://www.hackerrank.com/challenges/the-grid-search
 
 import { read } from '../../lib/read';

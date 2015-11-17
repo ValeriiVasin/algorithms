@@ -1,3 +1,7 @@
+'use strict';
+
+// https://www.hackerrank.com/challenges/utopian-tree
+
 import { read } from '../../lib/read';
 
 const solve = (reader) => {

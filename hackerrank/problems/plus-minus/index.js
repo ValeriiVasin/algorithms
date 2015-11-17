@@ -1,3 +1,5 @@
+'use strict';
+
 // https://www.hackerrank.com/challenges/plus-minus
 
 import { read } from '../../lib/read';

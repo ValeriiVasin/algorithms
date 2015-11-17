@@ -1,6 +1,6 @@
-// https://www.hackerrank.com/challenges/simple-array-sum
-
 'use strict'
+
+// https://www.hackerrank.com/challenges/simple-array-sum
 
 import { read } from '../../lib/read';
 
