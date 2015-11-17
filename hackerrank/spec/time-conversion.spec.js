@@ -1,6 +1,6 @@
 'use strict';
 
-const solution = require('../time-conversion');
+const solution = require('../src/time-conversion');
 
 describe('time-conversion', () => {
   it('works correctly for time before afternoon', () => {
@@ -21,4 +21,3 @@ describe('time-conversion', () => {
     });
   });
 });
-
