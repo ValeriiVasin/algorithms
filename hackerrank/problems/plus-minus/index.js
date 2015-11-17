@@ -1,6 +1,6 @@
 // https://www.hackerrank.com/challenges/plus-minus
 
-import { readLines } from '../lib/read';
+import { readLines } from '../../lib/read';
 
 const getFractions = (array, precision) => {
   const length = array.length;

@@ -2,7 +2,7 @@
 
 'use strict'
 
-import { readLines } from '../lib/read';
+import { readLines } from '../../lib/read';
 
 function solve(lines) {
   const n = Number(lines[0]);

@@ -15,38 +15,75 @@ const exec = (cmd) => {
   return _exec(cmd, { encoding: 'utf8' });
 };
 
-const srcFolder = path.resolve(__dirname, '../build');
-const dataFolder = path.resolve(__dirname, '../data');
+const buildFolder = path.resolve(__dirname, '../build');
 
 /**
- * Get list of tests [filename without extension] for which source/input/output files exist
- * @todo Optimize when there will be more files
+ *
+ * @return {Object} Runner config, e.g.
+ *
+ * [{
+ *  name: 'simple-array-sum',
+ *  file: 'full/path/to/solution.js',
+ *  tests: [{
+ *    key: 'default',
+ *    input: 'full/path/to/input.txt',
+ *    output: 'full/path/to/output.txt'
+ *  }]
+ * }]
  */
-const getTests = () => {
-  const srcFiles = fs.readdirSync(srcFolder).map((file) => file.slice(0, -3));
-  const dataInputFiles = fs.readdirSync(dataFolder)
-    .filter((file) => /\.in\.txt$/.test(file))
-    .map((file) => file.slice(0, -7));
-  const dataOutputFiles = fs.readdirSync(dataFolder)
-    .filter((file) => /\.out\.txt$/.test(file))
-    .map((file) => file.slice(0, -8));
+const getConfigs = () => {
+  const configs = fs.readdirSync('problems').map((name) => {
+    let config = {
+      name: name,
+      file: path.resolve(__dirname, `../build/${name}.js`),
+      tests: []
+    };
 
-  // find those files that have src and data
-  const tests = srcFiles.filter((file) => dataInputFiles.indexOf(file) !== -1 && dataOutputFiles.indexOf(file) !== -1);
+    // @todo optimize test cases determination
+    let problemFolder = path.resolve(__dirname, `../problems/${name}`);
+    let txtFiles = fs.readdirSync(problemFolder).filter((file) => /\.txt$/.test(file));;
+    let inputFiles = txtFiles.filter((file) => /in\.txt$/.test(file));
+    let outputFiles = txtFiles.filter((file) => /out\.txt$/.test(file));
 
-  return tests;
+    let keys = inputFiles.map((file) => file.slice(0, -6));
+
+    config.tests = keys
+      .filter((key) => outputFiles.indexOf(`${key}out.txt`) !== -1)
+      .map((key) => ({
+        key: key || 'default',
+        input: path.resolve(problemFolder, `${key}in.txt`),
+        output: path.resolve(problemFolder, `${key}out.txt`)
+      }));
+
+    return config;
+  });
+
+  return configs.filter((config) => config.tests.length);
 };
 
-fdescribe('I/O test', () => {
-  for (let test of getTests()) {
-    let srcFile = path.resolve(srcFolder, `${test}.js`);
-    let dataInputFile = path.resolve(dataFolder, `${test}.in.txt`);
-    let dataOutput = fs.readFileSync(path.resolve(dataFolder, `${test}.out.txt`), { encoding: 'utf8' });
+describe('I/O test', () => {
 
-    let cmd = `node ${srcFile} < ${dataInputFile}`;
+  for (let config of getConfigs()) {
+    describe(`- ${config.name}`, () => {
+      let file = config.file;
 
-    it(`- ${test}`, () => {
-      expect(exec(cmd).trim()).toBe(dataOutput.trim())
+      for (let test of config.tests) {
+        it(`- ${test.key}`, () => {
+          let cmd = `node ${file} < ${test.input}`;
+
+          expect(exec(cmd).trim()).toBe(fs.readFileSync(test.output, { encoding: 'utf8' }).trim());
+        });
+      }
+
     });
   }
+    // let srcFile = path.resolve(srcFolder, `${test}.js`);
+    // let dataInputFile = path.resolve(dataFolder, `${test}.in.txt`);
+    // let dataOutput = fs.readFileSync(path.resolve(dataFolder, `${test}.out.txt`), { encoding: 'utf8' });
+
+    // let cmd = `node ${srcFile} < ${dataInputFile}`;
+
+    // it(`- ${test}`, () => {
+    //   expect(exec(cmd).trim()).toBe(dataOutput.trim())
+    // });
 });

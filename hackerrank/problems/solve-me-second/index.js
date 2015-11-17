@@ -2,7 +2,7 @@
 
 'use strict';
 
-import { readLines } from '../lib/read';
+import { readLines } from '../../lib/read';
 
 const solve = (lines) => {
   let n = Number(lines[0].trim());

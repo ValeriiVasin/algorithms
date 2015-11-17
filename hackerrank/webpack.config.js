@@ -2,11 +2,8 @@ const fs = require('fs');
 
 // configure processing of whole `src/` directory
 const getEntries = () => {
-  return fs.readdirSync('./src').reduce((entries, file) => {
-    // cut .js
-    file = file.slice(0, -3);
-
-    entries[file] = `./src/${file}`;
+  return fs.readdirSync('./problems').reduce((entries, file) => {
+    entries[file] = `./problems/${file}/index`;
     return entries;
   }, {});
 };
