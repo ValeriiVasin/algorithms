@@ -1,8 +1,16 @@
+'use strict';
+
 const fs = require('fs');
 
 // configure processing of whole `src/` directory
 const getEntries = () => {
-  return fs.readdirSync('./problems').reduce((entries, file) => {
+  let problems = fs.readdirSync('./problems');
+
+  if (process.env.PROBLEM) {
+    problems = problems.filter((problem) => problem === process.env.PROBLEM);
+  }
+
+  return problems.reduce((entries, file) => {
     entries[file] = `./problems/${file}/index`;
     return entries;
   }, {});

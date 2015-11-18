@@ -5,6 +5,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack -w",
+    "build-test": "npm run build && npm test",
     "test": "jasmine"
   },
   "author": "Valerii Vasin",
