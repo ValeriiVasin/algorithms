@@ -1,14 +1,39 @@
 'use strict';
 
-const argv = require('minimist')(process.argv.slice(2));
+/**
+ * PROBLEM=<problem> gulp init
+ * PROBLEM=<problem> gulp test
+ * PROBLEM=<problem> gulp publish
+ * PROBLEM=<problem> gulp commit
+ */
+
 const gulp = require('gulp');
 const fs = require('fs');
 const path = require('path');
-const _exec = require('child_process').execSync;
+const _exec = require('child_process').exec;
+const _execSync = require('child_process').execSync;
+
+const PROBLEM = process.env.PROBLEM;
+
+const execSync = (cmd) => {
+  return _execSync(cmd, { encoding: 'utf8' });
+};
 
 const exec = (cmd) => {
-  return _exec(cmd, { encoding: 'utf8' });
+  return new Promise((resolve, reject) => {
+    let cp = _exec(cmd, { encoding: 'utf8' }, (err, result) => err ? reject(err) : resolve(result));
+
+    cp.stdout.pipe(process.stdout);
+    cp.stderr.pipe(process.stderr);
+    cp.stdin.pipe(process.stdin);
+  })
 };
+
+const ensureProblem = (task) => {
+  if (!PROBLEM) {
+    throw new Error(`Environment variable PROBLEM should be provided:\n\nPROBLEM=diagonal-difference gulp ${task}\n`);
+  }
+}
 
 const templateFile = path.resolve(__dirname, 'template.js');
 
@@ -25,30 +50,22 @@ const exists = (path) => {
  * generate problem folder structure
  *
  * @example
- *   gulp generate diagonal-difference
+ *   PROBLEM=diagonal-difference gulp init
  */
-gulp.task('generate', () => {
-  let problem = argv.problem;
+gulp.task('init', () => {
+  ensureProblem('init');
 
-  if (!problem) {
-    console.log(`
-[ERROR] Problem name should be provided should be provided:
-gulp generate --problem diagonal-difference
-    `);
-    return;
-  }
+  console.log(`Generating ${PROBLEM} problem file structure...`);
 
-  console.log(`Generating ${problem} problem file structure...`);
-
-  let template = fs.readFileSync(templateFile, { encoding: 'utf8' }).replace('<problem>', problem);
-  let problemFolder = path.resolve(__dirname, 'problems', problem);
+  let template = fs.readFileSync(templateFile, { encoding: 'utf8' }).replace('<problem>', PROBLEM);
+  let problemFolder = path.resolve(__dirname, 'problems', PROBLEM);
 
   if (exists(problemFolder)) {
     console.log(`[ERROR] Problem folder already exists.`);
     return;
   }
 
-  exec(`
+  execSync(`
     mkdir -p ${problemFolder}
     touch ${problemFolder}/in.txt
     touch ${problemFolder}/out.txt
@@ -56,5 +73,22 @@ gulp generate --problem diagonal-difference
 
   fs.writeFileSync(`${problemFolder}/index.js`, template);
 
-  exec(`subl ${problemFolder}/index.js`);
+  execSync(`subl ${problemFolder}/index.js`);
+});
+
+gulp.task('test', (done) => {
+  exec('npm run build-test').then(done, done);
+});
+
+gulp.task('publish', () => {
+  ensureProblem('publish');
+
+  execSync(`cat ./build/${PROBLEM}.js | pbcopy`);
+
+  console.log(`Solution is copied to clipboard.`);
+});
+
+gulp.task('commit', () => {
+  ensureProblem('commit');
+  execSync(`git add problems/${PROBLEM} && git ci -m "[hackerrank] Solve ${PROBLEM}."`);
 });
