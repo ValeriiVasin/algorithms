@@ -4,7 +4,7 @@
 
 import { read } from '../../lib/read';
 
-function solve(reader) {
+const solve = (reader) => {
 }
 
 read().then(solve);
