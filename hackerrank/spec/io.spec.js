@@ -32,7 +32,14 @@ const buildFolder = path.resolve(__dirname, '../build');
  * }]
  */
 const getConfigs = () => {
-  const configs = fs.readdirSync('problems').map((name) => {
+  let problems = fs.readdirSync('problems');
+
+  // allow to test only one problem
+  if (process.env.PROBLEM) {
+    problems = problems.filter((problem) => problem === process.env.PROBLEM);
+  }
+
+  const configs = problems.map((name) => {
     let config = {
       name: name,
       file: path.resolve(__dirname, `../build/${name}.js`),
