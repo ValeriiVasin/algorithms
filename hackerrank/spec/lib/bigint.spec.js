@@ -4,7 +4,7 @@ require("babel-core/register");
 
 const BigInt = require('../../lib/bigint').BigInt;
 
-fdescribe('The grid search', () => {
+describe('The grid search', () => {
   it('add()', () => {
     let value = new BigInt(5);
 

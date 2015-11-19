@@ -57,16 +57,14 @@ export class BigInt {
   add(value) {
     value = _toBigInt(value);
 
-    let valueLength = value.length;
-    let thisValueLength = this._value.length;
-    let length = Math.max(valueLength, thisValueLength);
+    let maxLength = Math.max(this._value.length, value.length);
     let result = [];
 
-    for (let i = 0; i < length; i++) {
-      let valueIndex = valueLength - i - 1;
-      let thisValueIndex = thisValueLength - i - 1;
+    for (let i = 0; i < maxLength; i++) {
+      let a = value[value.length - 1 - i] || 0;
+      let b = this._value[this._value.length - 1 - i] || 0;
 
-      result[length - i - 1] = (this._value[thisValueIndex] || 0) + (value[valueIndex] || 0)
+      result.unshift(a + b);
     }
 
     return new BigInt(
