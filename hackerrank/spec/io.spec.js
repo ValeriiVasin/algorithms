@@ -76,7 +76,7 @@ describe('I/O test', () => {
 
       for (let test of config.tests) {
         it(`- ${test.key}`, () => {
-          let cmd = `node ${file} < ${test.input}`;
+          let cmd = `${process.env.TIME ? 'time' : ''} node ${file} < ${test.input}`;
 
           expect(exec(cmd).trim()).toBe(fs.readFileSync(test.output, { encoding: 'utf8' }).trim());
         });
@@ -84,13 +84,4 @@ describe('I/O test', () => {
 
     });
   }
-    // let srcFile = path.resolve(srcFolder, `${test}.js`);
-    // let dataInputFile = path.resolve(dataFolder, `${test}.in.txt`);
-    // let dataOutput = fs.readFileSync(path.resolve(dataFolder, `${test}.out.txt`), { encoding: 'utf8' });
-
-    // let cmd = `node ${srcFile} < ${dataInputFile}`;
-
-    // it(`- ${test}`, () => {
-    //   expect(exec(cmd).trim()).toBe(dataOutput.trim())
-    // });
 });
