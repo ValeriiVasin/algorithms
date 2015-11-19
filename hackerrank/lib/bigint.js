@@ -7,6 +7,11 @@ const _normalize = (arr) => {
   // prevent mutations
   arr = arr.slice(0);
 
+  // remove leading zeros
+  while (arr[0] === 0) {
+    arr.shift();
+  }
+
   var length = arr.length;
   var borrow = 0;
 
@@ -23,11 +28,6 @@ const _normalize = (arr) => {
   while (borrow) {
     arr.unshift(borrow % 10);
     borrow = Math.floor(borrow / 10);
-  }
-
-  // remove leading zeros
-  while (arr[0] === 0) {
-    arr.shift();
   }
 
   return arr;
