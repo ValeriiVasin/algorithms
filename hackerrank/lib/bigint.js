@@ -100,6 +100,20 @@ export class BigInt {
     );
   }
 
+  pow(n) {
+    if (n === 0) {
+      return BigInt.from(1);
+    }
+
+    let value = BigInt.from(this);
+
+    for (let i = 1; i < n; i++) {
+      value = value.multiply(this);
+    }
+
+    return value;
+  }
+
   value() {
     return this._value.slice(0);
   }
