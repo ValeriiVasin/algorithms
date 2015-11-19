@@ -25,6 +25,11 @@ const _normalize = (arr) => {
     borrow = Math.floor(borrow / 10);
   }
 
+  // remove leading zeros
+  while (arr[0] === 0) {
+    arr.shift();
+  }
+
   return arr;
 }
 
@@ -65,6 +70,29 @@ export class BigInt {
       let b = this._value[this._value.length - 1 - i] || 0;
 
       result.unshift(a + b);
+    }
+
+    return new BigInt(
+      _normalize(result)
+    );
+  }
+
+  multiply(value) {
+    let a = this._value;
+    let b = _toBigInt(value);
+
+    // result length (number of digits)
+    let length = a.length + b.length;
+    let result = new Array(length).fill(0);
+
+    for (let i = 0, aLength = a.length; i < aLength; i++) {
+      let iLast = aLength - 1 - i;
+
+      for (let j = 0, bLength = b.length; j < bLength; j++) {
+        let jLast = bLength - j - 1;
+
+        result[length - 1 - i - j] += a[iLast] * b[jLast];
+      }
     }
 
     return new BigInt(
