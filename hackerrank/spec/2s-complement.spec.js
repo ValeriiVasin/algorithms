@@ -19,63 +19,12 @@ const dictionary = new Map([
   [-8, '1000']
 ]);
 
-const toComplement = require('../build/2s-complement').toComplement;
-const getRealRanges = require('../build/2s-complement').getRealRanges;
-const getRealRangesMap = require('../build/2s-complement').getRealRangesMap;
-const amountOfOnes = require('../build/2s-complement').amountOfOnes;
-
 const onesFromZero = require('../build/2s-complement').onesFromZero;
 const diffFromZero = require('../build/2s-complement').diffFromZero;
 const onesFromMinimum = require('../build/2s-complement').onesFromMinimum;
 const diff = require('../build/2s-complement').diff;
 
 describe('2s-complement', () => {
-  describe('toComplement()', () => {
-    for (let key of dictionary.keys()) {
-      it(`toComplement(${key}, 4)`, () => {
-        expect(toComplement(key, 4)).toBe(dictionary.get(key));
-      });
-    }
-  });
-
-  describe('getting real ranges', () => {
-    let ranges = [
-      { start: -2, end: -1 },
-      { start: -3, end: 0 },
-      { start: 1, end: 3 },
-      { start: 3, end: 5 }
-    ];
-
-    it('getting real ranges', () => {
-      expect(getRealRanges(ranges)).toEqual([
-        { start: -3, end: -2 },
-        { start: -2, end: -1 },
-        { start: -1, end: 0 },
-        { start: 1, end: 3 },
-        { start: 3, end: 5 },
-      ]);
-    });
-
-    it('get real ranges map', () => {
-      expect([...getRealRangesMap(ranges)]).toEqual([
-        [ -3, -2 ],
-        [ -2, -1 ],
-        [ -1, 0 ],
-        [ 1,  3 ],
-        [ 3,  5 ]
-      ]);
-    });
-  });
-
-  //0000 - 0 - 0
-  //0001 - 1 - 1
-  //0010 - 2 - 2
-  //0011 - 3 - 4
-  //0100 - 4 - 5
-  //0101 - 5 - 7
-  //0110 - 6 - 9
-  //0111 - 7 - 12
-  //1000 - 8 - 13
   it('onesFromZero()', () => {
     expect(onesFromZero(1)).toBe(1);
     expect(onesFromZero(2)).toBe(2);
