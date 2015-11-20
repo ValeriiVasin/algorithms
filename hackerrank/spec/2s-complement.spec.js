@@ -20,11 +20,44 @@ const dictionary = new Map([
 ]);
 
 const toComplement = require('../build/2s-complement').toComplement;
+const getRealRanges = require('../build/2s-complement').getRealRanges;
+const getRealRangesMap = require('../build/2s-complement').getRealRangesMap;
 
 describe('2s-complement', () => {
-  for (let key of dictionary.keys()) {
-    it(`toComplement(${key}, 4)`, () => {
-      expect(toComplement(key, 4)).toBe(dictionary.get(key));
+  describe('toComplement()', () => {
+    for (let key of dictionary.keys()) {
+      it(`toComplement(${key}, 4)`, () => {
+        expect(toComplement(key, 4)).toBe(dictionary.get(key));
+      });
+    }
+  });
+
+  describe('getting real ranges', () => {
+    let ranges = [
+      { start: -2, end: -1 },
+      { start: -3, end: 0 },
+      { start: 1, end: 3 },
+      { start: 3, end: 5 }
+    ];
+
+    it('getting real ranges', () => {
+      expect(getRealRanges(ranges)).toEqual([
+        { start: -3, end: -2 },
+        { start: -2, end: -1 },
+        { start: -1, end: 0 },
+        { start: 1, end: 3 },
+        { start: 3, end: 5 },
+      ]);
     });
-  }
+
+    it('get real ranges map', () => {
+      expect([...getRealRangesMap(ranges)]).toEqual([
+        [ -3, -2 ],
+        [ -2, -1 ],
+        [ -1, 0 ],
+        [ 1,  3 ],
+        [ 3,  5 ]
+      ]);
+    });
+  });
 });
