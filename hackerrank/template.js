@@ -5,6 +5,6 @@
 import { read } from '../../lib/read';
 
 const solve = (reader) => {
-}
+};
 
 read().then(solve);
