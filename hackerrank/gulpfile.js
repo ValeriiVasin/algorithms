@@ -88,14 +88,14 @@ const getCommentedOrigianl = (problem) => {
     // comment everything
     .split('\n').map((line) => '// ' + line).join('\n');
 
-  return `// Original version:\n// ================\n${original}`;
+  return `// Original solution:\n// =================\n${original}`;
 };
 
 gulp.task('publish', () => {
   ensureProblem('publish');
 
-  // build solution
-  execSync(`npm run build`);
+  // build minified solution
+  execSync(`npm run build-optimized`);
 
   // prepend original to build version
   let original = getCommentedOrigianl(PROBLEM);
