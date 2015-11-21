@@ -8,7 +8,7 @@ const _normalize = (arr) => {
   arr = arr.slice(0);
 
   // remove leading zeros
-  while (arr[0] === 0) {
+  while (arr[0] === 0 && arr.length > 1) {
     arr.shift();
   }
 

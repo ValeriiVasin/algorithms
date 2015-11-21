@@ -5,6 +5,12 @@ require("babel-core/register");
 const BigInt = require('../../lib/bigint').BigInt;
 
 describe('The grid search', () => {
+  it('support zeros', () => {
+    expect(BigInt.from(0).toString()).toBe('0');
+    expect(BigInt.from(0).multiply(10).toString()).toBe('0');
+    expect(BigInt.from(0).add(10).toString()).toBe('10');
+  });
+
   it('add()', () => {
     let value = new BigInt(5);
 
