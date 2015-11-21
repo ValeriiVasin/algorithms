@@ -14,6 +14,7 @@ const _exec = require('child_process').exec;
 const _execSync = require('child_process').execSync;
 
 const PROBLEM = process.env.PROBLEM;
+const PROBLEMS_FOLDER = path.resolve(__dirname, 'problems');
 
 const execSync = (cmd) => {
   return _execSync(cmd, { encoding: 'utf8' });
@@ -58,7 +59,7 @@ gulp.task('init', () => {
   console.log(`Generating ${PROBLEM} problem file structure...`);
 
   let template = fs.readFileSync(templateFile, { encoding: 'utf8' }).replace('<problem>', PROBLEM);
-  let problemFolder = path.resolve(__dirname, 'problems', PROBLEM);
+  let problemFolder = path.resolve(PROBLEMS_FOLDER, PROBLEM);
 
   if (exists(problemFolder)) {
     console.log(`[ERROR] Problem folder already exists.`);
@@ -80,9 +81,26 @@ gulp.task('test', (done) => {
   exec('npm run build-test').then(() => done(), done);
 });
 
+const getCommentedOrigianl = (problem) => {
+  let problemFile = path.resolve(PROBLEMS_FOLDER, PROBLEM, 'index.js');
+
+  let original = fs.readFileSync(problemFile, { encoding: 'utf8' }).trim()
+    // comment everything
+    .split('\n').map((line) => '// ' + line).join('\n');
+
+  return `// Original version:\n// ================\n${original}`;
+};
+
 gulp.task('publish', () => {
   ensureProblem('publish');
 
+  // build solution
+  execSync(`npm run build`);
+
+  // prepend original to build version
+  let original = getCommentedOrigianl(PROBLEM);
+  let buildFile = path.resolve(__dirname, 'build', `${PROBLEM}.js`);
+  fs.writeFileSync(buildFile, original + '\n\n' + fs.readFileSync(buildFile, { encoding: 'utf8' }));
   execSync(`cat ./build/${PROBLEM}.js | pbcopy`);
 
   console.log(`Solution is copied to clipboard.`);
