@@ -52,15 +52,23 @@ const getConfigs = () => {
     let inputFiles = txtFiles.filter((file) => /in\.txt$/.test(file));
     let outputFiles = txtFiles.filter((file) => /out\.txt$/.test(file));
 
+    // keys could be empty (for default test)
+    // if not empty - the last symbol is "."
     let keys = inputFiles.map((file) => file.slice(0, -6));
 
     config.tests = keys
       .filter((key) => outputFiles.indexOf(`${key}out.txt`) !== -1)
       .map((key) => ({
-        key: key || 'default',
+        // replace last dot for normalization
+        key: key.replace(/\.$/, '') || 'default',
         input: path.resolve(problemFolder, `${key}in.txt`),
         output: path.resolve(problemFolder, `${key}out.txt`)
       }));
+
+    if (process.env.TEST) {
+      let filter = new Set(process.env.TEST.split(','));
+      config.tests = config.tests.filter((test) => filter.has(test.key));
+    }
 
     return config;
   });
