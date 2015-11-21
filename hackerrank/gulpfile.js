@@ -2,7 +2,7 @@
 
 /**
  * PROBLEM=<problem> gulp init
- * PROBLEM=<problem> gulp test
+ * PROBLEM=<problem> [TEST=<testcase>] gulp test
  * PROBLEM=<problem> gulp publish
  * PROBLEM=<problem> gulp commit
  */
