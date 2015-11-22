@@ -78,7 +78,7 @@ gulp.task('init', () => {
 });
 
 gulp.task('test', (done) => {
-  exec('npm run test').then(() => done(), done);
+  exec('npm test').then(() => done(), done);
 });
 
 const getCommentedOrigianl = (problem) => {
