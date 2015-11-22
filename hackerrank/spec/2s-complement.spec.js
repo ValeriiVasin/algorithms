@@ -19,10 +19,7 @@ const dictionary = new Map([
   [-8, '1000']
 ]);
 
-const onesFromZero = require('../build/2s-complement').onesFromZero;
-const diffFromZero = require('../build/2s-complement').diffFromZero;
-const onesFromMinimum = require('../build/2s-complement').onesFromMinimum;
-const diff = require('../build/2s-complement').diff;
+import { onesFromZero, diffFromZero, onesFromMinimum, diff } from '../problems/2s-complement/index';
 
 describe('2s-complement', () => {
   it('onesFromZero()', () => {

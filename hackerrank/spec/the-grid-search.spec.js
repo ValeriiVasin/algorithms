@@ -1,5 +1,4 @@
-const isPattern = require('../build/the-grid-search').isPattern;
-const hasPattern = require('../build/the-grid-search').hasPattern;
+import { isPattern, hasPattern } from '../problems/the-grid-search/index';
 
 describe('The grid search', () => {
   const grid = ['123', '456', '789'];

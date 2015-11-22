@@ -1,6 +1,6 @@
 'use strict';
 
-const convertTime = require('../build/time-conversion').convertTime;
+import { convertTime } from '../problems/time-conversion/index';
 
 describe('time-conversion', () => {
   it('works correctly for time before afternoon', () => {

@@ -1,8 +1,6 @@
 'use strict';
 
-require("babel-core/register");
-
-const BigInt = require('../../lib/bigint').BigInt;
+import { BigInt } from '../../lib/bigint';
 
 describe('The grid search', () => {
   it('support zeros', () => {
