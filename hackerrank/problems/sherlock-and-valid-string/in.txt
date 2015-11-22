@@ -1,0 +1,8 @@
+aabbcd
+aabbcc
+aabbc
+abcddd
+a
+ab
+abbbb
+bbbbbbbbb
