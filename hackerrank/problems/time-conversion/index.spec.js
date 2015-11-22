@@ -1,6 +1,6 @@
 'use strict';
 
-import { convertTime } from '../problems/time-conversion/index';
+import { convertTime } from './index';
 
 describe('time-conversion', () => {
   it('works correctly for time before afternoon', () => {

@@ -1,4 +1,4 @@
-import { isPattern, hasPattern } from '../problems/the-grid-search/index';
+import { isPattern, hasPattern } from './index';
 
 describe('The grid search', () => {
   const grid = ['123', '456', '789'];

@@ -19,7 +19,7 @@ const dictionary = new Map([
   [-8, '1000']
 ]);
 
-import { onesFromZero, diffFromZero, onesFromMinimum, diff } from '../problems/2s-complement/index';
+import { onesFromZero, diffFromZero, onesFromMinimum, diff } from './index';
 
 describe('2s-complement', () => {
   it('onesFromZero()', () => {

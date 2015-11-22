@@ -1,6 +1,6 @@
 'use strict';
 
-import { BigInt } from '../../lib/bigint';
+import { BigInt } from './bigint';
 
 describe('The grid search', () => {
   it('support zeros', () => {
