@@ -77,6 +77,10 @@ const getConfigs = () => {
 };
 
 describe('I/O test', () => {
+  beforeAll(() => {
+    // build before running IO specs
+    exec('npm run build');
+  });
 
   for (let config of getConfigs()) {
     describe(`- ${config.name}`, () => {
