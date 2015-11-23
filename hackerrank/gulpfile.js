@@ -23,6 +23,7 @@ const config = require('./config');
 const project = process.env.PROBLEM ? config.projects.problems : config.projects.euler;
 const PROBLEM = process.env.PROBLEM || process.env.EULER;
 const PROBLEMS_FOLDER = path.resolve(__dirname, project.folder);
+const PROBLEM_FOLDER = path.resolve(PROBLEMS_FOLDER, PROBLEM);
 const PROBLEM_BUILD_FILE = path.resolve(__dirname, 'build', `${project.type}_${PROBLEM}.js`);
 
 const execSync = (cmd) => {
@@ -124,5 +125,9 @@ gulp.task('publish', () => {
 
 gulp.task('commit', () => {
   ensureProblem();
-  execSync(`git add problems/${PROBLEM} && git ci -m "[hackerrank] Solve ${PROBLEM}."`);
+  let message = process.env.PROBLEM ?
+    `[hackerrank] Solve problem ${PROBLEM}.` :
+    `[hackerrank] Solve euler ${PROBLEM}.`;
+
+  execSync(`git add ${PROBLEM_FOLDER} && git ci -m "${message}"`);
 });
