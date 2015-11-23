@@ -10,6 +10,7 @@
 const fs = require('fs');
 const path = require('path');
 const _exec = require('child_process').execSync;
+const config = require('../config');
 
 const exec = (cmd) => {
   return _exec(cmd, { encoding: 'utf8' });
@@ -31,23 +32,27 @@ const buildFolder = path.resolve(__dirname, '../build');
  *  }]
  * }]
  */
-const getConfigs = () => {
-  let problems = fs.readdirSync('problems');
+const _getConfigs = (_config) => {
+  let problems = fs.readdirSync(_config.folder);
 
   // allow to test only one problem
-  if (process.env.PROBLEM) {
+  if (process.env.PROBLEM && _config.type === 'problem') {
     problems = problems.filter((problem) => problem === process.env.PROBLEM);
+  }
+
+  if (process.env.EULER && _config.type === 'euler') {
+    problems = problems.filter((problem) => problem === process.env.EULER);
   }
 
   const configs = problems.map((name) => {
     let config = {
       name: name,
-      file: path.resolve(__dirname, `../build/${name}.js`),
+      file: path.resolve(__dirname, `../build/${_config.type}_${name}.js`),
       tests: []
     };
 
     // @todo optimize test cases determination
-    let problemFolder = path.resolve(__dirname, `../problems/${name}`);
+    let problemFolder = path.resolve(__dirname, '..', `${_config.folder}/${name}`);
     let txtFiles = fs.readdirSync(problemFolder).filter((file) => /\.txt$/.test(file));;
     let inputFiles = txtFiles.filter((file) => /in\.txt$/.test(file));
     let outputFiles = txtFiles.filter((file) => /out\.txt$/.test(file));
@@ -74,6 +79,23 @@ const getConfigs = () => {
   });
 
   return configs.filter((config) => config.tests.length);
+};
+
+const getConfigs = () => {
+  if (process.env.PROBLEM) {
+    return _getConfigs(config.projects.problems);
+  }
+
+  if (process.env.EULER) {
+    return _getConfigs(config.projects.euler);
+  }
+
+  let projects = Object.keys(config.projects);
+
+  return projects.reduce((result, project) => {
+    let configs = _getConfigs(config.projects[project]);
+    return result.concat(configs);
+  }, []);
 };
 
 describe('I/O test', () => {

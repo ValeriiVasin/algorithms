@@ -1,8 +1,8 @@
 'use strict'
 
-// https://www.hackerrank.com/challenges/<problem>
+// <hackerrank-url>
 
-import { read } from '../../lib/read';
+import { read } from '<lib-path>/read';
 
 const solve = (reader) => {
 };

@@ -5,6 +5,11 @@
  * PROBLEM=<problem> [TEST=<testcase>] gulp test
  * PROBLEM=<problem> gulp publish
  * PROBLEM=<problem> gulp commit
+ *
+ * EULER=<problem> gulp init
+ * EULER=<problem> [TEST=<testcase>] gulp test
+ * EULER=<problem> gulp publish
+ * EULER=<problem> gulp commit
  */
 
 const gulp = require('gulp');
@@ -13,8 +18,12 @@ const path = require('path');
 const _exec = require('child_process').exec;
 const _execSync = require('child_process').execSync;
 
-const PROBLEM = process.env.PROBLEM;
-const PROBLEMS_FOLDER = path.resolve(__dirname, 'problems');
+const config = require('./config');
+
+const project = process.env.PROBLEM ? config.projects.problems : config.projects.euler;
+const PROBLEM = process.env.PROBLEM || process.env.EULER;
+const PROBLEMS_FOLDER = path.resolve(__dirname, project.folder);
+const PROBLEM_BUILD_FILE = path.resolve(__dirname, 'build', `${project.type}_${PROBLEM}.js`);
 
 const execSync = (cmd) => {
   return _execSync(cmd, { encoding: 'utf8' });
@@ -30,9 +39,9 @@ const exec = (cmd) => {
   })
 };
 
-const ensureProblem = (task) => {
+const ensureProblem = () => {
   if (!PROBLEM) {
-    throw new Error(`Environment variable PROBLEM should be provided:\n\nPROBLEM=diagonal-difference gulp ${task}\n`);
+    throw new Error(`Environment variable PROBLEM/EULER should be provided for the task`);
   }
 }
 
@@ -47,18 +56,25 @@ const exists = (path) => {
   }
 };
 
-/**
- * generate problem folder structure
- *
- * @example
- *   PROBLEM=diagonal-difference gulp init
- */
 gulp.task('init', () => {
-  ensureProblem('init');
+  ensureProblem();
 
   console.log(`Generating ${PROBLEM} problem file structure...`);
 
-  let template = fs.readFileSync(templateFile, { encoding: 'utf8' }).replace('<problem>', PROBLEM);
+  // challenges
+  let hackerrankUrl = `https://www.hackerrank.com/challenges/${PROBLEM}`;
+  let libPath = '../../lib/read';
+
+  // euler
+  if (process.env.EULER) {
+    hackerrankUrl = `https://www.hackerrank.com/contests/projecteuler/challenges/euler${PROBLEM}`;
+    libPath = '../../../lib/read';
+  }
+
+  let template = fs.readFileSync(templateFile, { encoding: 'utf8' })
+    .replace('<hackerrank-url>', hackerrankUrl)
+    .replace('<lib-path>', libPath);
+
   let problemFolder = path.resolve(PROBLEMS_FOLDER, PROBLEM);
 
   if (exists(problemFolder)) {
@@ -81,7 +97,7 @@ gulp.task('test', (done) => {
   exec('npm test').then(() => done(), done);
 });
 
-const getCommentedOrigianl = (problem) => {
+const getCommentedOriginal = (problem) => {
   let problemFile = path.resolve(PROBLEMS_FOLDER, PROBLEM, 'index.js');
 
   let original = fs.readFileSync(problemFile, { encoding: 'utf8' }).trim()
@@ -92,21 +108,21 @@ const getCommentedOrigianl = (problem) => {
 };
 
 gulp.task('publish', () => {
-  ensureProblem('publish');
+  ensureProblem();
 
   // build minified solution
   execSync(`npm run build-optimized`);
 
   // prepend original to build version
-  let original = getCommentedOrigianl(PROBLEM);
-  let buildFile = path.resolve(__dirname, 'build', `${PROBLEM}.js`);
+  let original = getCommentedOriginal(PROBLEM);
+  let buildFile = path.resolve(PROBLEM_BUILD_FILE);
   fs.writeFileSync(buildFile, original + '\n\n' + fs.readFileSync(buildFile, { encoding: 'utf8' }));
-  execSync(`cat ./build/${PROBLEM}.js | pbcopy`);
+  execSync(`cat ${buildFile} | pbcopy`);
 
   console.log(`Solution is copied to clipboard.`);
 });
 
 gulp.task('commit', () => {
-  ensureProblem('commit');
+  ensureProblem();
   execSync(`git add problems/${PROBLEM} && git ci -m "[hackerrank] Solve ${PROBLEM}."`);
 });
