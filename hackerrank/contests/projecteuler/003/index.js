@@ -10,25 +10,22 @@ const solve = (reader) => {
 
   for (let i = 0; i < T; i++) {
     let N = reader.readNumber();
-    console.log(getPrimeFactors(N));
+    console.log(getBiggestPrime(N));
   }
 };
 
 read().then(solve);
 
-
-export function getPrimeFactors(number) {
+export function getBiggestPrime(number) {
   var prime = 2;
-  var primeFactors = [];
 
   while (number !== 1) {
     if (number % prime === 0) {
-      primeFactors.push(prime);
       number = number / prime;
     } else {
       prime = nextPrime(prime);
     }
   }
 
-  return primeFactors.pop();
+  return prime;
 }
