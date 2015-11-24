@@ -64,12 +64,12 @@ gulp.task('init', () => {
 
   // challenges
   let hackerrankUrl = `https://www.hackerrank.com/challenges/${PROBLEM}`;
-  let libPath = '../../lib/read';
+  let libPath = '../../lib/';
 
   // euler
   if (process.env.EULER) {
     hackerrankUrl = `https://www.hackerrank.com/contests/projecteuler/challenges/euler${PROBLEM}`;
-    libPath = '../../../lib/read';
+    libPath = '../../../lib/';
   }
 
   let template = fs.readFileSync(templateFile, { encoding: 'utf8' })
