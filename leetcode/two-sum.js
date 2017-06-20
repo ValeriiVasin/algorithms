@@ -27,7 +27,7 @@ export const twoSum = (nums, target) => {
     const element = nums[i];
     const needle = target - element;
 
-    // we are guaranteed that elements are uniq
+    // half-target case is handled above as an edge case
     if (needle === element) {
       continue;
     }
