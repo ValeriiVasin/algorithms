@@ -24,7 +24,7 @@ const normalizeArray = nums => {
 
       return counts[num] <= 3;
     })
-    .sort();
+    .sort((a, b) => a - b);
 };
 
 export const threeSum = (nums) => {
@@ -38,6 +38,11 @@ export const threeSum = (nums) => {
   const unique = {};
 
   nums = normalizeArray(nums);
+
+  if (nums.length === 3 && nums[0] === 0 && nums[2] === 0) {
+    return [[0, 0, 0]];
+  }
+
   const hash = toHashCounts(nums);
 
   for (let i = 0; i < length - 1; i++) {
@@ -67,7 +72,7 @@ export const threeSum = (nums) => {
 
       // filter unique
       const result = [iElement, jElement, needle];
-      const key = result.join(';');
+      const key = `${iElement} ${jElement} ${needle}`;
       if (unique.hasOwnProperty(key)) {
         continue;
       }
