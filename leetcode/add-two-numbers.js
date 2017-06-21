@@ -16,7 +16,9 @@ export function ListNode(value) {
 }
 
 export const addTwoNumbers = function(l1, l2) {
-  return toList(toValue(l1) + toValue(l2));
+  return fromArray(
+    addArrays(toArray(l1), toArray(l2))
+  );
 };
 
 const traverse = (list, callback) => {
@@ -45,30 +47,24 @@ export const toArray = list => {
   return result;
 }
 
-function toList(number) {
-  const result = new ListNode(number % 10);
+const addArrays = (one, two) => {
+  const oneLength = one.length;
+  const twoLength = two.length;
+  const length = oneLength > twoLength ? oneLength : twoLength;
 
-  number = Math.floor(number / 10);
+  let borrow = 0;
+  const result = [];
+  for (let i = 0; i < length; i++) {
+    const sum = (one[i] || 0) + (two[i] || 0) + borrow;
+    const value = sum % 10;
 
-  let res = result;
-  while (number) {
-    res.next = new ListNode(number % 10);
+    result[i] = value;
+    borrow = (sum - value) / 10;
+  }
 
-    number = Math.floor(number / 10);
-    res = res.next;
+  if (borrow) {
+    result.push(borrow);
   }
 
   return result;
-}
-
-function toValue(list) {
-  let result = list.val;
-  let i = 1;
-
-  while (list = list.next) {
-    result += Math.pow(10, i) * list.val;
-    i += 1;
-  }
-
-  return result;
-}
+};
