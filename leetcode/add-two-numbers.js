@@ -1,4 +1,6 @@
 /**
+ * @TODO: solution that works only with Linked Lists (no arrays)
+ *
  * Definition for singly-linked list.
  * function ListNode(val) {
  *     this.val = val;
