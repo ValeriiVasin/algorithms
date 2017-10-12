@@ -101,7 +101,7 @@ const getConfigs = () => {
 xdescribe('I/O test', () => {
   beforeAll(() => {
     // build before running IO specs
-    exec('npm run build');
+    // exec('npm run build');
   });
 
   for (let config of getConfigs()) {
