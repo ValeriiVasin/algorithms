@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "lint": "eslint leetcode",
     "leetcode": "jest leetcode"
   },
   "dependencies": {
@@ -14,5 +15,9 @@
   },
   "repository": "git@bitbucket.org:valeriivasin/algorithms.git",
   "author": "Valerii Vasin <valerii.vasin@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "eslint-plugin-jest": "^21.2.0"
+  }
 }

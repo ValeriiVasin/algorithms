@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/3sum/#/description
 
-const toHashCounts = nums => nums.reduce((hash, num, index) => {
+const toHashCounts = nums => nums.reduce((hash, num) => {
   if (hash.hasOwnProperty(num)) {
     hash[num]++;
   } else {
