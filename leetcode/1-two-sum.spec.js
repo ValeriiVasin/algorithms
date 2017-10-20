@@ -1,4 +1,4 @@
-const { twoSum } = require('./two-sum');
+const { twoSum } = require('./1-two-sum');
 
 test('simple case', () => {
   expect(twoSum([2, 7, 11, 15], 9)).toEqual([0, 1]);

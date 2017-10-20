@@ -10,13 +10,13 @@
   },
   "dependencies": {
     "babel-jest": "^20.0.3",
-    "babel-preset-es2015": "^6.24.1",
     "jest": "^20.0.4"
   },
   "repository": "git@bitbucket.org:valeriivasin/algorithms.git",
   "author": "Valerii Vasin <valerii.vasin@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "babel-preset-env": "^1.6.1",
     "eslint": "^4.8.0",
     "eslint-plugin-jest": "^21.2.0"
   }

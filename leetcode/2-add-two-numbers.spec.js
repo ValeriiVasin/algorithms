@@ -1,4 +1,4 @@
-const { addTwoNumbers, toArray, fromArray } = require('./add-two-numbers');
+const { addTwoNumbers, toArray, fromArray } = require('./2-add-two-numbers');
 
 describe('helpers', () => {
   const list = {

@@ -1,4 +1,4 @@
-const { threeSum } = require("./three-sum");
+const { threeSum } = require("./15-three-sum");
 
 test("simple", () => {
   const result = threeSum([-1, 0, 1, 2, -1, -4]);
