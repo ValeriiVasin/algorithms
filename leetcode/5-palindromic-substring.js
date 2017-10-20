@@ -1,5 +1,8 @@
 // https://leetcode.com/problems/longest-palindromic-substring/description/
 // http://www.geeksforgeeks.org/longest-palindromic-substring-set-2/
+//
+// Manacher's algorithm could be used to manage the task in linear time vs O^2
+// http://www.geeksforgeeks.org/manachers-algorithm-linear-time-longest-palindromic-substring-part-1/
 
 function longestPalindrome(s) {
   const length = s.length;
