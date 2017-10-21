@@ -8,31 +8,21 @@ export const lengthOfLongestSubstring = function(s) {
   }
 
   const uniq = new Set();
-  let i = 0;
-  let maxLength = 0;
   let start = 0;
-  while (i < length) {
-    const char = s.charAt(i);
+  let end = 0;
+  let maxLength = 0;
+  while (start < length && end < length) {
+    const char = s.charAt(end);
 
     if (!uniq.has(char)) {
       uniq.add(char);
-      i += 1;
+      end += 1;
+      maxLength = Math.max(maxLength, uniq.size);
       continue;
     }
 
-    const currentLength = uniq.size;
-    if (currentLength > maxLength) {
-      maxLength = currentLength;
-    }
-
-    uniq.clear();
-    i = s.indexOf(char, start) + 1;
-    start = i;
-  }
-
-  const currentLength = uniq.size;
-  if (currentLength > maxLength) {
-    return currentLength;
+    uniq.delete(s.charAt(start));
+    start += 1;
   }
 
   return maxLength;
