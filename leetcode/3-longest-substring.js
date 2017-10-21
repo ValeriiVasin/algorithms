@@ -1,28 +1,39 @@
 // https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
 // Note: current solution somehow works locally, but throws runtime exception on leetcode :(
 
-const lengthOfLongestSubstring = function(s) {
-  const set = new Set();
-
-  let length = 0;
-  for (const char of s) {
-    if (set.has(char)) {
-      const index = s.indexOf(char);
-      const nextSubstring = s.slice(index + 1);
-      const nextSubstringLength = nextSubstring.length;
-
-      if (length >= nextSubstringLength) {
-        return length;
-      }
-
-      return Math.max(length, lengthOfLongestSubstring(nextSubstring));
-    }
-
-    set.add(char);
-    length += 1;
+export const lengthOfLongestSubstring = function(s) {
+  const length = s.length;
+  if (length === 0) {
+    return 0;
   }
 
-  return length;
-};
+  const uniq = new Set();
+  let i = 0;
+  let maxLength = 0;
+  let start = 0;
+  while (i < length) {
+    const char = s.charAt(i);
 
-module.exports = lengthOfLongestSubstring;
+    if (!uniq.has(char)) {
+      uniq.add(char);
+      i += 1;
+      continue;
+    }
+
+    const currentLength = uniq.size;
+    if (currentLength > maxLength) {
+      maxLength = currentLength;
+    }
+
+    uniq.clear();
+    i = s.indexOf(char, start) + 1;
+    start = i;
+  }
+
+  const currentLength = uniq.size;
+  if (currentLength > maxLength) {
+    return currentLength;
+  }
+
+  return maxLength;
+};

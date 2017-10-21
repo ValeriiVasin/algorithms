@@ -1,4 +1,4 @@
-const lengthOfLongestSubstring = require('./3-longest-substring');
+import { lengthOfLongestSubstring } from './3-longest-substring';
 
 const fs = require('fs');
 const path = require('path');
